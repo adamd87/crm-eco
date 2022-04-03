@@ -1,4 +1,4 @@
-package pl.adamd.crmsrv.client.dto.response;
+package pl.adamd.crmsrv.client.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClientViewResponse {
+public class UpdateClientDetailsRequest {
 
     private Long id;
     private String name;
