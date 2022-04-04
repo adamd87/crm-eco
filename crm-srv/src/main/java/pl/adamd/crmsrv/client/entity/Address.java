@@ -1,6 +1,7 @@
 package pl.adamd.crmsrv.client.entity;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 
 import javax.persistence.*;
@@ -12,12 +13,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "addresses")
+@DynamicUpdate
 public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-
     private String street;
     private String buildingNumber;
     private String apartmentNumber;
