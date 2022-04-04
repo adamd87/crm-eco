@@ -29,9 +29,9 @@ class ClientController {
         return ResponseEntity.ok(clientViewService.getAllAddresses());
     }
 
-    @GetMapping("/clients/get-by-id")
-    ResponseEntity<ClientAddressesViewResponse> getClientById(@RequestBody Long id){
-        return ResponseEntity.ok(clientViewService.getClientById(id));
+    @GetMapping("/clients/get-by-id/{clientId}")
+    ResponseEntity<ClientAddressesViewResponse> getClientById(@PathVariable Long clientId) {
+        return ResponseEntity.ok(clientViewService.getClientById(clientId));
     }
 
     @PostMapping("/clients/create")
@@ -39,9 +39,9 @@ class ClientController {
         return ResponseEntity.ok(clientViewService.createClient(newClient));
     }
 
-    @PatchMapping("/clients/update")
-    ResponseEntity<ClientViewResponse> updateClient(@RequestBody UpdateClientDetailsRequest updateClientDetails) {
-        return ResponseEntity.ok(clientViewService.updateClient(updateClientDetails));
+    @PatchMapping("/clients/update/{clientId}")
+    ResponseEntity<ClientViewResponse> updateClient(@PathVariable Long clientId, @RequestBody UpdateClientDetailsRequest updateClientDetails) {
+        return ResponseEntity.ok(clientViewService.updateClient(clientId, updateClientDetails));
     }
 
     @PatchMapping("/clients/addresses/update")

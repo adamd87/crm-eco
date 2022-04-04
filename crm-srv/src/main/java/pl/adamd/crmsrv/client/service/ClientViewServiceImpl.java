@@ -15,8 +15,8 @@ import pl.adamd.crmsrv.client.mapper.ClientMapper;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.function.Consumer;
+
+import static pl.adamd.crmsrv.common.CommonUtils.setIfNotNull;
 
 @Service
 @AllArgsConstructor
@@ -43,9 +43,9 @@ public class ClientViewServiceImpl implements ClientViewService {
     }
 
     @Override
-    public ClientViewResponse updateClient(UpdateClientDetailsRequest updateClientDetails) {
+    public ClientViewResponse updateClient(Long clientId, UpdateClientDetailsRequest updateClientDetails) {
 
-        Client client = getSpecifiedClient(updateClientDetails);
+        Client client = getSpecifiedClient(clientId);
 
         setIfNotNull(updateClientDetails.getName(), client::setName);
         setIfNotNull(updateClientDetails.getSurname(), client::setSurname);
@@ -151,20 +151,12 @@ public class ClientViewServiceImpl implements ClientViewService {
         return clientService.saveClient(client);
     }
 
-    public static <V> void setIfNotNull(V value, Consumer<V> setter) {
-        if (Objects.nonNull(value)) {
-            setter.accept(value);
-        }
-    }
-
-    private Client getSpecifiedClient(UpdateClientDetailsRequest updateClientDetails) {
-        Long clientId;
-        if (updateClientDetails.getId() == null) {
+    private Client getSpecifiedClient(Long clientId) {
+        if (clientId == null) {
             throw new RuntimeException("The client id was not specified");
         } else {
-            clientId = updateClientDetails.getId();
+            return clientService.findClientById(clientId);
         }
-        return clientService.findClientById(clientId);
     }
 
     private void assigningClientToAddresses(List<Address> addresses, Client client) {

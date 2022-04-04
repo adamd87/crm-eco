@@ -14,7 +14,7 @@ public interface ClientViewService {
 
     ClientViewResponse createClient(CreateClientRequest newClient);
 
-    ClientViewResponse updateClient(UpdateClientDetailsRequest updateClientDetails);
+    ClientViewResponse updateClient(Long clientId, UpdateClientDetailsRequest updateClientDetails);
 
     ClientAddressesViewResponse updateClientAddresses(UpdateClientAddressesRequest clientAddressesRequest);
 
