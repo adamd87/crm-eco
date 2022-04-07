@@ -1,4 +1,5 @@
-package pl.adamd.crmsrv.offer.service;
+package pl.adamd.crmsrv.offer.service.offer;
+
 
 import pl.adamd.crmsrv.offer.entity.Offer;
 
@@ -10,4 +11,7 @@ public interface OfferService {
     List<Offer> findByClientId(Long id);
 
     Offer findById(Long id);
+
+    Offer save(Offer offer);
+
 }

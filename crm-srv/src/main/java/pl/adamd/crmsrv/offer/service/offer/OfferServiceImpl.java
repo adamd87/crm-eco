@@ -1,10 +1,12 @@
-package pl.adamd.crmsrv.offer.service;
+package pl.adamd.crmsrv.offer.service.offer;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.adamd.crmsrv.client.entity.Client;
 import pl.adamd.crmsrv.client.service.ClientService;
+import pl.adamd.crmsrv.offer.entity.Installation;
 import pl.adamd.crmsrv.offer.entity.Offer;
+import pl.adamd.crmsrv.offer.repository.InstallationRepository;
 import pl.adamd.crmsrv.offer.repository.OfferRepository;
 
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class OfferServiceImpl implements OfferService {
     private final OfferRepository offerRepository;
+    private final InstallationRepository installationRepository;
     private final ClientService clientService;
 
     @Override
@@ -36,10 +39,17 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public Offer findById(Long id) {
-        if (!offerRepository.existsById(id)){
+        if (!offerRepository.existsById(id)) {
             throw new RuntimeException("The specified offer does not exist");
         } else {
             return offerRepository.getById(id);
         }
     }
+
+    @Override
+    public Offer save(Offer offer) {
+        return offerRepository.save(offer);
+    }
+
+
 }

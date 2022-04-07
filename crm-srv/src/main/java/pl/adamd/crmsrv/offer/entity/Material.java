@@ -13,19 +13,19 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "installations")
+@Table(name = "materials")
 @DynamicUpdate
-public class Installation {
+public class Material {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     private String name;
-    private String type;
+    private String producer;
+    private String power;
+    private String category;
     private BigDecimal price;
-    private int executionTimeInDays;
     @ManyToMany
     private List<Offer> offers;
 }
-

@@ -1,4 +1,4 @@
-package pl.adamd.crmsrv.offer.dto;
+package pl.adamd.crmsrv.offer.dto.material;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,11 +9,12 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InstallationViewResponse {
+public class MaterialViewResponse {
 
     private Long id;
     private String name;
-    private String type;
+    private String producer;
+    private String power;
+    private String category;
     private BigDecimal price;
-    private int executionTimeInDays;
 }
