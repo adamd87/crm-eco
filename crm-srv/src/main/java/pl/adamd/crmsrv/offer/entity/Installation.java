@@ -23,13 +23,13 @@ public class Installation {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    @Size(min = 1, max = 100, message = "Name value cannot be empty")
+    @NotNull
     private String name;
-    @NotNull(message = "Type value cannot be empty")
+    @NotNull
     private String type;
-    @NotNull(message = "Price value cannot be empty")
+    @NotNull
     private BigDecimal price;
-    @NotNull(message = "Days count cannot be empty")
+    @NotNull
     private int executionTimeInDays;
     @ManyToMany
     private List<Offer> offers;

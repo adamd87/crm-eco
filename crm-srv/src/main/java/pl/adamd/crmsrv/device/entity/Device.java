@@ -21,17 +21,17 @@ public class Device {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @NotNull(message = "Name value cannot be empty")
+    @NotNull
     private String name;
-    @NotNull(message = "Producer value cannot be empty")
+    @NotNull
     private String producer;
-    @NotNull(message = "Serial number value cannot be empty")
+    @NotNull
     private String serialNumber;
-    @NotNull(message = "Power value cannot be empty")
+    @NotNull
     private String power;
-    @NotNull(message = "Category value cannot be empty")
+    @NotNull
     private String category;
-    @NotNull(message = "Price value cannot be empty")
+    @NotNull
     private BigDecimal price;
 
 }

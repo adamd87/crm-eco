@@ -21,14 +21,14 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @NotNull(message = "Name value cannot be empty")
+    @NotNull
     private String name;
     private String surname;
     @OneToMany
     private List<Address> addresses;
-    @NotNull(message = "Phone number value cannot be empty")
+    @NotNull
     private String phone;
-    @NotNull(message = "Email value cannot be empty")
+    @NotNull
     private String email;
     private String info;
     private Boolean agreement;
