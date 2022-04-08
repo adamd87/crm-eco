@@ -3,6 +3,7 @@ package pl.adamd.crmsrv.offer.dto.offer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.adamd.crmsrv.offer.dto.material.MaterialsViewRequest;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 public class OfferViewRequest {
 
     private Long clientId;
-    private List<Long> materialIdList;
+    private List<MaterialsViewRequest> materialIdList;
     private List<Long> installationIdList;
     private LocalDate nearestStartDate;
 

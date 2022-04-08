@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @AllArgsConstructor
-public class InstallationController {
+class InstallationController {
     private final InstallationViewService installationViewService;
 
     @GetMapping("/installations/get-all")
