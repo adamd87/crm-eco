@@ -48,6 +48,9 @@ public class DeviceViewServiceImpl implements DeviceViewService {
         setIfNotNull(deviceViewRequest.getPower(), device::setPower);
         setIfNotNull(deviceViewRequest.getCategory(), device::setCategory);
         setIfNotNull(deviceViewRequest.getPrice(), device::setPrice);
+        setIfNotNull(deviceViewRequest.getTaxRate(), device::setTaxRate);
+        setIfNotNull(deviceViewRequest.getCount(), device::setCount);
+        setIfNotNull(deviceViewRequest.getUnit(), device::setUnit);
 
         deviceService.save(device);
 
@@ -67,6 +70,8 @@ public class DeviceViewServiceImpl implements DeviceViewService {
                     .power(newDevice.getPower())
                     .category(newDevice.getCategory())
                     .price(newDevice.getPrice())
+                    .taxRate(newDevice.getTaxRate())
+                    .unit(newDevice.getUnit())
                     .build();
             materialService.save(material);
         }

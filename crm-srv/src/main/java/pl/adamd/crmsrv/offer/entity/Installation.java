@@ -8,6 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 @Entity
@@ -29,6 +30,8 @@ public class Installation {
     private String type;
     @NotNull
     private BigDecimal price;
+    private BigDecimal taxRate;
+    private BigDecimal grossPrice;
     @NotNull
     private int executionTimeInDays;
     @ManyToMany

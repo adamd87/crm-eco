@@ -2,6 +2,8 @@ package pl.adamd.crmsrv.device.entity;
 
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
+import pl.adamd.crmsrv.common.UnitOfMeasure;
+import pl.adamd.crmsrv.realization.enitity.Realization;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -33,5 +35,15 @@ public class Device {
     private String category;
     @NotNull
     private BigDecimal price;
+
+    private BigDecimal taxRate;
+
+    private BigDecimal count;
+
+    private UnitOfMeasure unit;
+
+    @ManyToOne
+    @JoinColumn(name = "realizations_id")
+    private Realization realization;
 
 }

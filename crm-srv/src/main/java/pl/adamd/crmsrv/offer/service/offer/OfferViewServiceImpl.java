@@ -7,6 +7,7 @@ import pl.adamd.crmsrv.client.entity.Client;
 import pl.adamd.crmsrv.client.service.ClientService;
 import pl.adamd.crmsrv.offer.dto.installation.InstallationViewResponse;
 import pl.adamd.crmsrv.offer.dto.material.MaterialViewResponse;
+import pl.adamd.crmsrv.offer.dto.material.MaterialsViewRequest;
 import pl.adamd.crmsrv.offer.dto.offer.OfferViewRequest;
 import pl.adamd.crmsrv.offer.dto.offer.OfferViewResponse;
 import pl.adamd.crmsrv.offer.entity.Installation;
@@ -98,7 +99,10 @@ public class OfferViewServiceImpl implements OfferViewService {
     private BigDecimal getInstallationPrice(List<Installation> installationList) {
         BigDecimal installationPrice = new BigDecimal(BigInteger.ZERO);
         for (Installation installation : installationList) {
-            installationPrice = installationPrice.add(installation.getPrice());
+            BigDecimal installationTax = installation.getPrice().multiply(installation.getTaxRate());
+            BigDecimal grossInstallationPrice = installation.getPrice().add(installationTax);
+            installation.setGrossPrice(grossInstallationPrice.setScale(2, RoundingMode.HALF_DOWN));
+            installationPrice = installationPrice.add(grossInstallationPrice);
         }
         return installationPrice;
     }
@@ -106,7 +110,12 @@ public class OfferViewServiceImpl implements OfferViewService {
     private BigDecimal getDevicesPrice(List<Material> materialList) {
         BigDecimal materialsPrice = new BigDecimal(BigInteger.ZERO);
         for (Material material : materialList) {
-            materialsPrice = materialsPrice.add(material.getPrice());
+            BigDecimal materialTax = material.getPrice().multiply(material.getTaxRate());
+            BigDecimal grossMaterialPrice = material.getPrice().add(materialTax);
+            material.setGrossPrice(grossMaterialPrice.setScale(2, RoundingMode.HALF_DOWN));
+            BigDecimal totalMaterialGrossPrice = grossMaterialPrice.multiply(material.getCount());
+            material.setTotalGrossPrice(totalMaterialGrossPrice.setScale(2, RoundingMode.HALF_DOWN));
+            materialsPrice = materialsPrice.add(totalMaterialGrossPrice);
         }
         return materialsPrice;
     }
@@ -121,12 +130,13 @@ public class OfferViewServiceImpl implements OfferViewService {
     }
 
     private List<Material> getDeviceList(OfferViewRequest offerViewRequest) {
-        List<Material> deviceList = new ArrayList<>();
-        for (Long materialId : offerViewRequest.getMaterialIdList()) {
-            Material material = materialService.findById(materialId);
-            deviceList.add(material);
+        List<Material> materials = new ArrayList<>();
+        for (MaterialsViewRequest materialReq : offerViewRequest.getMaterialIdList()) {
+            Material material = materialService.findById(materialReq.getMaterialId());
+            material.setCount(materialReq.getCount());
+            materials.add(material);
         }
-        return deviceList;
+        return materials;
     }
 
     private List<OfferViewResponse> getOfferViewResponseList(List<Offer> offerList) {

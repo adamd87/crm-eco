@@ -14,5 +14,6 @@ public class InstallationViewRequest {
     private String name;
     private String type;
     private BigDecimal price;
+    private BigDecimal taxRate;
     private int executionTimeInDays;
 }
