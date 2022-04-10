@@ -6,6 +6,7 @@ import pl.adamd.crmsrv.client.entity.Client;
 import pl.adamd.crmsrv.realization.enitity.Realization;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -24,10 +25,14 @@ public class Agreement {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @NotNull
+    private String agreementNumber;
+
     @ManyToOne
     @JoinColumn(name = "clients_id")
     private Client client;
 
+    private BigDecimal netContractAmount;
     private BigDecimal grossContractAmount;
 
     private LocalDate dateOfSigning;

@@ -5,7 +5,10 @@ import org.hibernate.annotations.DynamicUpdate;
 import pl.adamd.crmsrv.agreement.entity.Agreement;
 import pl.adamd.crmsrv.client.entity.Client;
 import pl.adamd.crmsrv.device.entity.Device;
+import pl.adamd.crmsrv.offer.dto.material.MaterialListOfferResponse;
 import pl.adamd.crmsrv.offer.entity.Installation;
+import pl.adamd.crmsrv.offer.entity.Material;
+import pl.adamd.crmsrv.offer.entity.MaterialsToOffer;
 import pl.adamd.crmsrv.offer.entity.Offer;
 
 import javax.persistence.*;
@@ -30,10 +33,10 @@ public class Realization {
     private Offer offer;
 
     @OneToMany(mappedBy = "realization")
-    private List<Device> deviceList;
+    private List<MaterialsToOffer> materials;
 
-    @ManyToMany
-    private List<Installation> installationList;
+    @OneToMany(mappedBy = "realization")
+    private List<Device> specifyDevice;
 
     @ManyToOne
     @JoinColumn(name = "clients_id")

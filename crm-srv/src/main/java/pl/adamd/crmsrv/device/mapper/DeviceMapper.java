@@ -2,6 +2,7 @@ package pl.adamd.crmsrv.device.mapper;
 
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
+import pl.adamd.crmsrv.device.dto.DeviceOrderViewResponse;
 import pl.adamd.crmsrv.device.dto.DeviceViewRequest;
 import pl.adamd.crmsrv.device.dto.DeviceViewResponse;
 import pl.adamd.crmsrv.device.entity.Device;
@@ -12,6 +13,8 @@ import java.util.List;
 public interface DeviceMapper {
 
     List<DeviceViewResponse> mapListDevicesToDto(List<Device> deviceList);
+
+    List<DeviceOrderViewResponse> mapOrderListDevicesToDto(List<Device> deviceList);
 
     DeviceViewResponse mapDeviceToDto(Device device);
 

@@ -6,17 +6,21 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.adamd.crmsrv.client.entity.Client;
 import pl.adamd.crmsrv.client.service.ClientService;
 import pl.adamd.crmsrv.offer.dto.installation.InstallationViewResponse;
+import pl.adamd.crmsrv.offer.dto.material.MaterialListOfferResponse;
 import pl.adamd.crmsrv.offer.dto.material.MaterialViewResponse;
 import pl.adamd.crmsrv.offer.dto.material.MaterialsViewRequest;
 import pl.adamd.crmsrv.offer.dto.offer.OfferViewRequest;
 import pl.adamd.crmsrv.offer.dto.offer.OfferViewResponse;
 import pl.adamd.crmsrv.offer.entity.Installation;
 import pl.adamd.crmsrv.offer.entity.Material;
+import pl.adamd.crmsrv.offer.entity.MaterialsToOffer;
 import pl.adamd.crmsrv.offer.entity.Offer;
 import pl.adamd.crmsrv.offer.mapper.InstallationMapper;
 import pl.adamd.crmsrv.offer.mapper.MaterialMapper;
+import pl.adamd.crmsrv.offer.mapper.MaterialsToOfferMapper;
 import pl.adamd.crmsrv.offer.service.installation.InstallationService;
 import pl.adamd.crmsrv.offer.service.material.MaterialService;
+import pl.adamd.crmsrv.offer.service.materialToOffer.MaterialsToOfferService;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -32,8 +36,10 @@ public class OfferViewServiceImpl implements OfferViewService {
     private final ClientService clientService;
     private final MaterialService materialService;
     private final InstallationService installationService;
+    private final MaterialsToOfferService materialsToOfferService;
     private final InstallationMapper installationMapper;
     private final MaterialMapper materialMapper;
+    private final MaterialsToOfferMapper toOfferMapper;
 
     @Override
     public List<OfferViewResponse> getAllOffers() {
@@ -62,7 +68,7 @@ public class OfferViewServiceImpl implements OfferViewService {
 
         Client client = clientService.findClientById(offerViewRequest.getClientId());
 
-        List<Material> materialList = getDeviceList(offerViewRequest);
+        List<MaterialsToOffer> materialList = getDeviceList(offerViewRequest);
         BigDecimal devicesPrice = getDevicesPrice(materialList);
 
         List<Installation> installationList = getInstallationList(offerViewRequest);
@@ -85,6 +91,10 @@ public class OfferViewServiceImpl implements OfferViewService {
 
         offerService.save(offer);
 
+        for (MaterialsToOffer material : materialList) {
+            material.setOffer(offer);
+        }
+
         return getOfferViewResponse(offer);
     }
 
@@ -102,19 +112,16 @@ public class OfferViewServiceImpl implements OfferViewService {
             BigDecimal installationTax = installation.getPrice().multiply(installation.getTaxRate());
             BigDecimal grossInstallationPrice = installation.getPrice().add(installationTax);
             installation.setGrossPrice(grossInstallationPrice.setScale(2, RoundingMode.HALF_DOWN));
-            installationPrice = installationPrice.add(grossInstallationPrice);
+            installationPrice = installationPrice.add(grossInstallationPrice.setScale(2, RoundingMode.HALF_DOWN));
         }
         return installationPrice;
     }
 
-    private BigDecimal getDevicesPrice(List<Material> materialList) {
+    private BigDecimal getDevicesPrice(List<MaterialsToOffer> materialList) {
         BigDecimal materialsPrice = new BigDecimal(BigInteger.ZERO);
-        for (Material material : materialList) {
-            BigDecimal materialTax = material.getPrice().multiply(material.getTaxRate());
-            BigDecimal grossMaterialPrice = material.getPrice().add(materialTax);
-            material.setGrossPrice(grossMaterialPrice.setScale(2, RoundingMode.HALF_DOWN));
-            BigDecimal totalMaterialGrossPrice = grossMaterialPrice.multiply(material.getCount());
-            material.setTotalGrossPrice(totalMaterialGrossPrice.setScale(2, RoundingMode.HALF_DOWN));
+        for (MaterialsToOffer material : materialList) {
+            BigDecimal materialGrossPrice = material.getMaterial().getGrossPrice();
+            BigDecimal totalMaterialGrossPrice = materialGrossPrice.multiply(material.getCount());
             materialsPrice = materialsPrice.add(totalMaterialGrossPrice);
         }
         return materialsPrice;
@@ -129,31 +136,37 @@ public class OfferViewServiceImpl implements OfferViewService {
         return installationList;
     }
 
-    private List<Material> getDeviceList(OfferViewRequest offerViewRequest) {
-        List<Material> materials = new ArrayList<>();
+    private List<MaterialsToOffer> getDeviceList(OfferViewRequest offerViewRequest) {
+
+        List<MaterialsToOffer> materialListOfferResponses = new ArrayList<>();
         for (MaterialsViewRequest materialReq : offerViewRequest.getMaterialIdList()) {
             Material material = materialService.findById(materialReq.getMaterialId());
-            material.setCount(materialReq.getCount());
-            materials.add(material);
+            MaterialsToOffer offerResponse = new MaterialsToOffer();
+            offerResponse.setMaterial(material);
+            offerResponse.setCount(materialReq.getCount());
+            materialListOfferResponses.add(offerResponse);
+            materialsToOfferService.save(offerResponse);
         }
-        return materials;
+        return materialListOfferResponses;
     }
 
     private List<OfferViewResponse> getOfferViewResponseList(List<Offer> offerList) {
         List<OfferViewResponse> offerViewResponseList = new ArrayList<>();
 
         for (Offer offer : offerList) {
-            OfferViewResponse offerViewResponse = getOfferViewResponse(offer);
-            offerViewResponseList.add(offerViewResponse);
+            offerViewResponseList.add(getOfferViewResponse(offer));
         }
         return offerViewResponseList;
     }
 
     private OfferViewResponse getOfferViewResponse(Offer offer) {
         OfferViewResponse offerViewResponse = new OfferViewResponse();
-        List<MaterialViewResponse> materialViewResponsesList = materialMapper.mapMaterialListToDto(offer.getMaterials());
-        List<InstallationViewResponse> installationViewResponseList = installationMapper.installationListToDto(offer.getInstallationList());
-        offerViewResponse.setMaterialList(materialViewResponsesList);
+        List<InstallationViewResponse> installationViewResponseList =
+                installationMapper.installationListToDto(offer.getInstallationList());
+        List<MaterialListOfferResponse> materialListOfferResponseList =
+                toOfferMapper.mapOfferListToDto(offer.getMaterials());
+
+        offerViewResponse.setMaterialList(materialListOfferResponseList);
         offerViewResponse.setInstallationList(installationViewResponseList);
         offerViewResponse.setClientId(offer.getClient().getId());
         offerViewResponse.setClientFullName(offer.getClient().getName() + " " + offer.getClient().getSurname());

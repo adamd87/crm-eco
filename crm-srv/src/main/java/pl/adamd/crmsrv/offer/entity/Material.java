@@ -2,6 +2,7 @@ package pl.adamd.crmsrv.offer.entity;
 
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
+import pl.adamd.crmsrv.common.MaterialsFlag;
 import pl.adamd.crmsrv.common.UnitOfMeasure;
 
 import javax.persistence.*;
@@ -30,9 +31,16 @@ public class Material {
     private BigDecimal price;
     private BigDecimal taxRate;
     private BigDecimal grossPrice;
-    private BigDecimal totalGrossPrice;
     private BigDecimal count;
     private UnitOfMeasure unit;
-    @ManyToMany
-    private List<Offer> offers;
+    private MaterialsFlag materialsFlag;
+
+
+    @OneToMany
+    private List<MaterialsToOffer> materials;
+
+    public BigDecimal getGrossPrice(){
+        return price.multiply(taxRate).add(price).setScale(2, RoundingMode.HALF_DOWN);
+    }
+
 }
