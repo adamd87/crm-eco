@@ -19,4 +19,5 @@ public class UpdateClientAddressesRequest {
     private String country;
     private boolean ofCorrespondence;
     private boolean ofOrder;
+    private boolean headquarters;
 }

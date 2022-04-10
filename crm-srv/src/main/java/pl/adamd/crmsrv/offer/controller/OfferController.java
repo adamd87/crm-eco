@@ -3,8 +3,11 @@ package pl.adamd.crmsrv.offer.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.adamd.crmsrv.offer.dto.material.MaterialsViewRequest;
+import pl.adamd.crmsrv.offer.dto.material.UpdateOfferMaterialsVieRequest;
 import pl.adamd.crmsrv.offer.dto.offer.OfferViewRequest;
 import pl.adamd.crmsrv.offer.dto.offer.OfferViewResponse;
+import pl.adamd.crmsrv.offer.entity.Material;
 import pl.adamd.crmsrv.offer.service.offer.OfferViewService;
 
 import java.util.List;
@@ -34,5 +37,11 @@ public class OfferController {
     ResponseEntity<OfferViewResponse> createOffer(@RequestBody OfferViewRequest offerViewRequest) {
         return ResponseEntity.ok(offerViewService.createNewOffer(offerViewRequest));
     }
+
+    @PatchMapping("/offers/update-materials/{offerId}")
+    ResponseEntity<OfferViewResponse> updateOfferMaterials(@PathVariable Long offerId, @RequestBody UpdateOfferMaterialsVieRequest request) {
+        return ResponseEntity.ok(offerViewService.updateOfferMaterials(offerId, request));
+    }
+
 
 }

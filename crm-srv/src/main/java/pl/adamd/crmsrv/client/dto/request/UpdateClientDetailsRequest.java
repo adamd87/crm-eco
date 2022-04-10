@@ -17,4 +17,9 @@ public class UpdateClientDetailsRequest {
     private String info;
     private Boolean agreement;
     private Boolean installation;
+    private Boolean privatePerson;
+    private Boolean business;
+    private String nip;
+    private String regon;
+    private String traderName;
 }

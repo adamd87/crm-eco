@@ -21,7 +21,9 @@ public class OfferViewResponse {
     private String clientFullName;
     private List<MaterialListOfferResponse> materialList;
     private List<InstallationViewResponse> installationList;
-    private BigDecimal totalPrice;
+    private BigDecimal netPrice;
+    private BigDecimal taxRate;
+    private BigDecimal grossPrice;
     private LocalDate approximateStartDate;
     private LocalDate approximateEndDate;
 

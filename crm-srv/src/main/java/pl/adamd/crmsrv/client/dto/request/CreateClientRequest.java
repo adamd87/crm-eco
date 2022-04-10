@@ -19,4 +19,9 @@ public class CreateClientRequest {
     private List<AddressesRequest> addressesList;
     private Boolean agreement;
     private Boolean installation;
+    private Boolean privatePerson;
+    private Boolean business;
+    private String nip;
+    private String regon;
+    private String traderName;
 }

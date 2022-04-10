@@ -11,6 +11,7 @@ import pl.adamd.crmsrv.client.dto.response.AddressViewResponse;
 import pl.adamd.crmsrv.client.dto.response.ClientAddressesViewResponse;
 import pl.adamd.crmsrv.client.entity.Client;
 import pl.adamd.crmsrv.client.mapper.ClientMapper;
+import pl.adamd.crmsrv.client.service.ClientService;
 import pl.adamd.crmsrv.common.MaterialsFlag;
 import pl.adamd.crmsrv.device.dto.DeviceOrderViewResponse;
 import pl.adamd.crmsrv.device.dto.DeviceViewResponse;
@@ -47,6 +48,7 @@ public class RealizationViewServiceImpl implements RealizationViewService {
     private final RealizationService realizationService;
     private final OfferService offerService;
     private final DeviceService deviceService;
+    private final ClientService clientService;
     private final AgreementService agreementService;
     private final MaterialsToOfferService materialsToOfferService;
     private final DeviceMapper deviceMapper;
@@ -60,6 +62,7 @@ public class RealizationViewServiceImpl implements RealizationViewService {
     @Override
     @Transactional
     public RealizationViewResponse createNewRealization(RealizationViewRequest request) {
+
         Offer offer = offerService.findById(request.getOfferId());
 
         List<MaterialsToOffer> materials = getMaterialList(offer);
@@ -68,58 +71,13 @@ public class RealizationViewServiceImpl implements RealizationViewService {
 
         setRealizationToSpecifyMaterial(realization);
 
-        specifyDevicesToRealization(materials, realization);
-
-
-        BigDecimal netPriceMaterials = new BigDecimal(ZERO);
-        BigDecimal grossPriceMaterials = new BigDecimal(ZERO);
-
-        for (MaterialsToOffer material : materials) {
-            netPriceMaterials = netPriceMaterials.add(material.getMaterial().getPrice());
-            BigDecimal materialGrossPrice = material.getMaterial().getGrossPrice();
-            grossPriceMaterials = grossPriceMaterials.add(materialGrossPrice);
-        }
-
-        BigDecimal netPriceInstallations = new BigDecimal(ZERO);
-        BigDecimal grossPriceInstallations = new BigDecimal(ZERO);
-
-        for (Installation installation : offer.getInstallationList()) {
-            netPriceInstallations = netPriceInstallations.add(installation.getPrice());
-            BigDecimal installationGrossPrice = installation.getGrossPrice();
-            grossPriceInstallations = grossPriceInstallations.add(installationGrossPrice);
-        }
-
-        BigDecimal totalNetPrice = netPriceMaterials.add(netPriceInstallations);
-        BigDecimal totalGrossPrice = grossPriceMaterials.add(grossPriceInstallations);
-
-        Agreement agreement = getAgreement(request, offer, realization, totalNetPrice, totalGrossPrice);
+        Agreement agreement = getAgreement(request, offer, realization, offer.getNetPrice(), offer.getGrossPrice());
 
         updateClient(realization, agreement);
-
 
         return getRealizationViewResponse(realization);
     }
 
-    private void specifyDevicesToRealization(List<MaterialsToOffer> materials, Realization realization) {
-        for (MaterialsToOffer material : materials) {
-            List<Device> devices = new ArrayList<>();
-
-            if (material.getMaterial().getMaterialsFlag().equals(MaterialsFlag.device)) {
-                Device device = deviceService.findAll().stream()
-                        .filter(
-                                dev -> dev.getName().equals(material.getMaterial().getName()) &&
-                                        dev.getProducer().equals(material.getMaterial().getProducer()) &&
-                                        dev.getPower().equals(material.getMaterial().getPower()) &&
-                                        dev.getCategory().equals(material.getMaterial().getCategory()) &&
-                                        dev.getPrice().equals(material.getMaterial().getPrice()) &&
-                                        !dev.isSold()).findFirst().get();
-                devices.add(device);
-                device.setSold(true);
-                device.setRealization(realization);
-            }
-            realization.setSpecifyDevice(devices);
-        }
-    }
 
     private void setRealizationToSpecifyMaterial(Realization realization) {
         for (MaterialsToOffer materialsToOffer : realization.getMaterials()) {
@@ -169,6 +127,7 @@ public class RealizationViewServiceImpl implements RealizationViewService {
         client.getRealizations().add(realization);
         client.setInstallation(true);
         client.setAgreement(true);
+        clientService.saveClient(client);
         return client;
     }
 
@@ -176,8 +135,7 @@ public class RealizationViewServiceImpl implements RealizationViewService {
                                    Offer offer,
                                    Realization realization,
                                    BigDecimal netPrice,
-                                   BigDecimal grossPrice
-    ) {
+                                   BigDecimal grossPrice) {
         List<Realization> realizations = new ArrayList<>();
         realizations.add(realization);
 

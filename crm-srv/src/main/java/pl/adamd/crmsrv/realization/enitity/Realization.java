@@ -35,9 +35,6 @@ public class Realization {
     @OneToMany(mappedBy = "realization")
     private List<MaterialsToOffer> materials;
 
-    @OneToMany(mappedBy = "realization")
-    private List<Device> specifyDevice;
-
     @ManyToOne
     @JoinColumn(name = "clients_id")
     private Client client;

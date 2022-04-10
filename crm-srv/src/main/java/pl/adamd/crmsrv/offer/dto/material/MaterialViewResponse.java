@@ -19,8 +19,6 @@ public class MaterialViewResponse {
     private String power;
     private String category;
     private BigDecimal price;
-    private BigDecimal taxRate;
-    private BigDecimal grossPrice;
     private UnitOfMeasure unit;
     private MaterialsFlag materialsFlag;
 }

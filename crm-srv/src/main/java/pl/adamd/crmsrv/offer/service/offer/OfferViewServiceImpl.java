@@ -8,6 +8,7 @@ import pl.adamd.crmsrv.client.service.ClientService;
 import pl.adamd.crmsrv.offer.dto.installation.InstallationViewResponse;
 import pl.adamd.crmsrv.offer.dto.material.MaterialListOfferResponse;
 import pl.adamd.crmsrv.offer.dto.material.MaterialsViewRequest;
+import pl.adamd.crmsrv.offer.dto.material.UpdateOfferMaterialsVieRequest;
 import pl.adamd.crmsrv.offer.dto.offer.OfferViewRequest;
 import pl.adamd.crmsrv.offer.dto.offer.OfferViewResponse;
 import pl.adamd.crmsrv.offer.entity.Installation;
@@ -67,13 +68,16 @@ public class OfferViewServiceImpl implements OfferViewService {
 
         Client client = clientService.findClientById(offerViewRequest.getClientId());
 
+        BigDecimal taxRate = getTaxRate(client);
+
         List<MaterialsToOffer> materialList = getDeviceList(offerViewRequest);
         BigDecimal devicesPrice = getDevicesPrice(materialList);
 
         List<Installation> installationList = getInstallationList(offerViewRequest);
         BigDecimal installationPrice = getInstallationPrice(installationList);
 
-        BigDecimal totalPrice = devicesPrice.add(installationPrice).setScale(2, RoundingMode.HALF_DOWN);
+        BigDecimal netPrice = devicesPrice.add(installationPrice).setScale(2, RoundingMode.HALF_DOWN);
+        BigDecimal grossPrice = netPrice.add(netPrice.multiply(taxRate)).setScale(2, RoundingMode.HALF_DOWN);
 
         long executionTimeInDays = getExecutionTimeInDays(installationList);
 
@@ -83,7 +87,9 @@ public class OfferViewServiceImpl implements OfferViewService {
                 .client(client)
                 .materials(materialList)
                 .installationList(installationList)
-                .totalPrice(totalPrice)
+                .netPrice(netPrice)
+                .taxRate(taxRate)
+                .grossPrice(grossPrice)
                 .dayOfStart(offerViewRequest.getNearestStartDate())
                 .dayOfEnd(estimatedCompletionDate)
                 .build();
@@ -97,6 +103,45 @@ public class OfferViewServiceImpl implements OfferViewService {
         return getOfferViewResponse(offer);
     }
 
+    @Override
+    public OfferViewResponse updateOfferMaterials(Long offerId, UpdateOfferMaterialsVieRequest request) {
+        Offer offer = offerService.findById(offerId);
+
+        Material material = materialService.findById(request.getMaterialId());
+
+        MaterialsToOffer materialsToOffer = offer.getMaterials().stream()
+                .filter(materials -> materials.getMaterial().getId().equals(request.getMaterialToOfferId())).findFirst().get();
+
+        if (request.getCount() != null) {
+            materialsToOffer.setCount(request.getCount());
+        }
+        materialsToOffer.setMaterial(material);
+
+        BigDecimal newNetMaterialPrice = getDevicesPrice(offer.getMaterials());
+        BigDecimal installationNetPrice = getInstallationPrice(offer.getInstallationList());
+
+        BigDecimal offerNetPrice = newNetMaterialPrice.add(installationNetPrice).setScale(2, RoundingMode.HALF_DOWN);
+        BigDecimal offerGrossPrice = offerNetPrice.add(offerNetPrice.multiply(offer.getTaxRate())).setScale(2, RoundingMode.HALF_DOWN);
+
+        offer.setNetPrice(offerNetPrice);
+        offer.setGrossPrice(offerGrossPrice);
+        materialsToOfferService.save(materialsToOffer);
+        offerService.save(offer);
+
+        return getOfferViewResponse(offer);
+    }
+
+
+    private BigDecimal getTaxRate(Client client) {
+        BigDecimal taxRate;
+        if (client.getPrivatePerson()) {
+            taxRate = BigDecimal.valueOf(0.08);
+        } else {
+            taxRate = BigDecimal.valueOf(0.23);
+        }
+        return taxRate;
+    }
+
     private long getExecutionTimeInDays(List<Installation> installationList) {
         long executionTimeInDays = 0;
         for (Installation installation : installationList) {
@@ -108,10 +153,7 @@ public class OfferViewServiceImpl implements OfferViewService {
     private BigDecimal getInstallationPrice(List<Installation> installationList) {
         BigDecimal installationPrice = new BigDecimal(BigInteger.ZERO);
         for (Installation installation : installationList) {
-            BigDecimal installationTax = installation.getPrice().multiply(installation.getTaxRate());
-            BigDecimal grossInstallationPrice = installation.getPrice().add(installationTax);
-            installation.setGrossPrice(grossInstallationPrice.setScale(2, RoundingMode.HALF_DOWN));
-            installationPrice = installationPrice.add(grossInstallationPrice.setScale(2, RoundingMode.HALF_DOWN));
+            installationPrice = installationPrice.add(installation.getPrice());
         }
         return installationPrice;
     }
@@ -119,9 +161,7 @@ public class OfferViewServiceImpl implements OfferViewService {
     private BigDecimal getDevicesPrice(List<MaterialsToOffer> materialList) {
         BigDecimal materialsPrice = new BigDecimal(BigInteger.ZERO);
         for (MaterialsToOffer material : materialList) {
-            BigDecimal materialGrossPrice = material.getMaterial().getGrossPrice();
-            BigDecimal totalMaterialGrossPrice = materialGrossPrice.multiply(material.getCount());
-            materialsPrice = materialsPrice.add(totalMaterialGrossPrice);
+            materialsPrice = materialsPrice.add(material.getMaterial().getPrice());
         }
         return materialsPrice;
     }
@@ -140,7 +180,6 @@ public class OfferViewServiceImpl implements OfferViewService {
         List<MaterialsToOffer> materialListOfferResponses = new ArrayList<>();
         for (MaterialsViewRequest materialReq : offerViewRequest.getMaterialIdList()) {
             Material material = materialService.findById(materialReq.getMaterialId());
-            material.setCount(material.getCount().subtract(materialReq.getCount()));
             MaterialsToOffer offerResponse = new MaterialsToOffer();
             offerResponse.setMaterial(material);
             offerResponse.setCount(materialReq.getCount());
@@ -170,7 +209,9 @@ public class OfferViewServiceImpl implements OfferViewService {
         offerViewResponse.setInstallationList(installationViewResponseList);
         offerViewResponse.setClientId(offer.getClient().getId());
         offerViewResponse.setClientFullName(offer.getClient().getName() + " " + offer.getClient().getSurname());
-        offerViewResponse.setTotalPrice(offer.getTotalPrice());
+        offerViewResponse.setNetPrice(offer.getNetPrice());
+        offerViewResponse.setTaxRate(offer.getTaxRate());
+        offerViewResponse.setGrossPrice(offer.getGrossPrice());
         offerViewResponse.setApproximateStartDate(offer.getDayOfStart());
         offerViewResponse.setApproximateEndDate(offer.getDayOfEnd());
         return offerViewResponse;

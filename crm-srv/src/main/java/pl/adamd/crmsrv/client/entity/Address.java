@@ -30,6 +30,7 @@ public class Address {
     private Client client;
     private boolean ofCorrespondence;
     private boolean ofOrder;
+    private boolean headquarters;
 
 
 }

@@ -45,9 +45,9 @@ public class Device {
 
     private UnitOfMeasure unit;
 
-    @ManyToOne
-    @JoinColumn(name = "realizations_id")
-    private Realization realization;
+//    @ManyToOne
+//    @JoinColumn(name = "realizations_id")
+//    private Realization realization;
 
 
     public BigDecimal getGrossPrice(){

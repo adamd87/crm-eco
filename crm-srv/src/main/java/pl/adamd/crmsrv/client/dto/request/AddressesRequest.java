@@ -17,5 +17,6 @@ public class AddressesRequest {
     private String country;
     private boolean ofCorrespondence;
     private boolean ofOrder;
+    private boolean headquarters;
 }
 

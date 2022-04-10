@@ -17,4 +17,5 @@ public class AddressViewResponse {
     private String country;
     private boolean ofCorrespondence;
     private boolean ofOrder;
+    private boolean headquarters;
 }
