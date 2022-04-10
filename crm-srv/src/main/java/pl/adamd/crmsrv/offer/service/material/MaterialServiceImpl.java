@@ -3,7 +3,9 @@ package pl.adamd.crmsrv.offer.service.material;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.adamd.crmsrv.offer.entity.Material;
+import pl.adamd.crmsrv.offer.entity.MaterialsToOffer;
 import pl.adamd.crmsrv.offer.repository.MaterialRepository;
+import pl.adamd.crmsrv.offer.repository.MaterialsToOfferRepository;
 
 import java.util.List;
 
@@ -11,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class MaterialServiceImpl implements MaterialService {
     private final MaterialRepository materialRepository;
+    private final MaterialsToOfferRepository materialsToOfferRepository;
 
     @Override
     public Material findById(Long id) {
@@ -29,4 +32,6 @@ public class MaterialServiceImpl implements MaterialService {
     public Material save(Material material) {
         return materialRepository.save(material);
     }
+
+
 }

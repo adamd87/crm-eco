@@ -4,12 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class RealizationViewRequest {
 
     private Long offerId;
-    private Long agreementId;
+    private String newAgreementNumber;
+    private LocalDate dateOfSigning;
 
 }

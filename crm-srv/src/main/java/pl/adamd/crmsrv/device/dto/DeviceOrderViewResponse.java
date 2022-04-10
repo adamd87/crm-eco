@@ -10,8 +10,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeviceViewResponse {
-
+public class DeviceOrderViewResponse {
     private Long id;
     private String name;
     private String producer;
@@ -20,7 +19,6 @@ public class DeviceViewResponse {
     private String category;
     private BigDecimal price;
     private BigDecimal taxRate;
-    private BigDecimal count;
+    private BigDecimal orderCount;
     private UnitOfMeasure unit;
-    private boolean sold;
 }

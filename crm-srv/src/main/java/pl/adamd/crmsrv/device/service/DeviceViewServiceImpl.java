@@ -2,6 +2,7 @@ package pl.adamd.crmsrv.device.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.adamd.crmsrv.common.MaterialsFlag;
 import pl.adamd.crmsrv.device.dto.DeviceViewRequest;
 import pl.adamd.crmsrv.device.dto.DeviceViewResponse;
 import pl.adamd.crmsrv.device.entity.Device;
@@ -9,6 +10,7 @@ import pl.adamd.crmsrv.device.mapper.DeviceMapper;
 import pl.adamd.crmsrv.offer.entity.Material;
 import pl.adamd.crmsrv.offer.service.material.MaterialService;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static pl.adamd.crmsrv.common.CommonUtils.setIfNotNull;
@@ -72,6 +74,7 @@ public class DeviceViewServiceImpl implements DeviceViewService {
                     .price(newDevice.getPrice())
                     .taxRate(newDevice.getTaxRate())
                     .unit(newDevice.getUnit())
+                    .materialsFlag(MaterialsFlag.device)
                     .build();
             materialService.save(material);
         }

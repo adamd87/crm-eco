@@ -8,6 +8,7 @@ import pl.adamd.crmsrv.realization.enitity.Realization;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @Entity
 @Getter
@@ -40,10 +41,17 @@ public class Device {
 
     private BigDecimal count;
 
+    private boolean sold;
+
     private UnitOfMeasure unit;
 
     @ManyToOne
     @JoinColumn(name = "realizations_id")
     private Realization realization;
+
+
+    public BigDecimal getGrossPrice(){
+       return price.multiply(taxRate).add(price).setScale(2, RoundingMode.HALF_DOWN);
+    }
 
 }

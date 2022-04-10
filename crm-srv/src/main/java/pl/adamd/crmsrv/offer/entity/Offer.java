@@ -3,6 +3,7 @@ package pl.adamd.crmsrv.offer.entity;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import pl.adamd.crmsrv.client.entity.Client;
+import pl.adamd.crmsrv.offer.dto.material.MaterialListOfferResponse;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -26,10 +27,14 @@ public class Offer {
     @ManyToOne
     @JoinColumn(name = "clients_id")
     private Client client;
-    @ManyToMany
-    private List<Material> materials;
+
+    @OneToMany(mappedBy = "offer")
+    private List<MaterialsToOffer> materials;
+
     @ManyToMany
     private List<Installation> installationList;
+
+
     private BigDecimal totalPrice;
     private LocalDate dayOfStart;
     private LocalDate dayOfEnd;

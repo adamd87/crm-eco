@@ -4,9 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.adamd.crmsrv.device.dto.DeviceViewResponse;
 import pl.adamd.crmsrv.offer.dto.installation.InstallationViewResponse;
-import pl.adamd.crmsrv.offer.dto.material.MaterialViewResponse;
+import pl.adamd.crmsrv.offer.dto.material.MaterialListOfferResponse;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -20,7 +19,7 @@ public class OfferViewResponse {
 
     private Long clientId;
     private String clientFullName;
-    private List<MaterialViewResponse> materialList;
+    private List<MaterialListOfferResponse> materialList;
     private List<InstallationViewResponse> installationList;
     private BigDecimal totalPrice;
     private LocalDate approximateStartDate;

@@ -36,5 +36,10 @@ public class Installation {
     private int executionTimeInDays;
     @ManyToMany
     private List<Offer> offers;
+
+    public BigDecimal getGrossPrice(){
+        return price.multiply(taxRate).add(price).setScale(2, RoundingMode.HALF_DOWN);
+    }
+
 }
 
