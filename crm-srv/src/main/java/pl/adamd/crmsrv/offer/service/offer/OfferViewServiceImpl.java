@@ -7,7 +7,6 @@ import pl.adamd.crmsrv.client.entity.Client;
 import pl.adamd.crmsrv.client.service.ClientService;
 import pl.adamd.crmsrv.offer.dto.installation.InstallationViewResponse;
 import pl.adamd.crmsrv.offer.dto.material.MaterialListOfferResponse;
-import pl.adamd.crmsrv.offer.dto.material.MaterialViewResponse;
 import pl.adamd.crmsrv.offer.dto.material.MaterialsViewRequest;
 import pl.adamd.crmsrv.offer.dto.offer.OfferViewRequest;
 import pl.adamd.crmsrv.offer.dto.offer.OfferViewResponse;
@@ -141,6 +140,7 @@ public class OfferViewServiceImpl implements OfferViewService {
         List<MaterialsToOffer> materialListOfferResponses = new ArrayList<>();
         for (MaterialsViewRequest materialReq : offerViewRequest.getMaterialIdList()) {
             Material material = materialService.findById(materialReq.getMaterialId());
+            material.setCount(material.getCount().subtract(materialReq.getCount()));
             MaterialsToOffer offerResponse = new MaterialsToOffer();
             offerResponse.setMaterial(material);
             offerResponse.setCount(materialReq.getCount());

@@ -10,7 +10,6 @@ import pl.adamd.crmsrv.device.mapper.DeviceMapper;
 import pl.adamd.crmsrv.offer.entity.Material;
 import pl.adamd.crmsrv.offer.service.material.MaterialService;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import static pl.adamd.crmsrv.common.CommonUtils.setIfNotNull;
@@ -73,6 +72,7 @@ public class DeviceViewServiceImpl implements DeviceViewService {
                     .category(newDevice.getCategory())
                     .price(newDevice.getPrice())
                     .taxRate(newDevice.getTaxRate())
+                    .count(newDevice.getCount())
                     .unit(newDevice.getUnit())
                     .materialsFlag(MaterialsFlag.device)
                     .build();
