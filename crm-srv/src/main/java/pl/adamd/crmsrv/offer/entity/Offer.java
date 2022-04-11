@@ -3,11 +3,11 @@ package pl.adamd.crmsrv.offer.entity;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import pl.adamd.crmsrv.client.entity.Client;
-import pl.adamd.crmsrv.offer.dto.material.MaterialListOfferResponse;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -34,8 +34,11 @@ public class Offer {
     @ManyToMany
     private List<Installation> installationList;
 
-
-    private BigDecimal totalPrice;
+    private BigDecimal netPrice;
+    private BigDecimal taxRate;
+    private BigDecimal grossPrice;
+    private LocalDateTime dateOfCreate;
+    private LocalDateTime dateOfLastUpdate;
     private LocalDate dayOfStart;
     private LocalDate dayOfEnd;
     private boolean accepted;

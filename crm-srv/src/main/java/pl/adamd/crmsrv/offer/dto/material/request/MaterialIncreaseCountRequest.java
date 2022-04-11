@@ -1,4 +1,4 @@
-package pl.adamd.crmsrv.offer.dto.material;
+package pl.adamd.crmsrv.offer.dto.material.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,8 +9,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MaterialListOfferResponse {
+public class MaterialIncreaseCountRequest {
 
-    private MaterialViewResponse material;
-    private BigDecimal count;
+    private BigDecimal increaseBy;
 }

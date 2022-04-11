@@ -54,6 +54,11 @@ public class ClientViewServiceImpl implements ClientViewService {
         setIfNotNull(updateClientDetails.getInfo(), client::setInfo);
         setIfNotNull(updateClientDetails.getAgreement(), client::setAgreement);
         setIfNotNull(updateClientDetails.getInstallation(), client::setInstallation);
+        setIfNotNull(updateClientDetails.getPrivatePerson(), client::setPrivatePerson);
+        setIfNotNull(updateClientDetails.getBusiness(), client::setBusiness);
+        setIfNotNull(updateClientDetails.getNip(), client::setNip);
+        setIfNotNull(updateClientDetails.getRegon(), client::setRegon);
+        setIfNotNull(updateClientDetails.getTraderName(), client::setTraderName);
 
         client = clientService.saveClient(client);
 
@@ -127,6 +132,7 @@ public class ClientViewServiceImpl implements ClientViewService {
         setIfNotNull(clientAddressesRequest.getCountry(), address::setCountry);
         setIfNotNull(clientAddressesRequest.isOfCorrespondence(), address::setOfCorrespondence);
         setIfNotNull(clientAddressesRequest.isOfOrder(), address::setOfOrder);
+        setIfNotNull(clientAddressesRequest.isHeadquarters(), address::setHeadquarters);
         clientService.saveAddress(address);
         clientService.saveClient(address.getClient());
         return address;
@@ -144,6 +150,7 @@ public class ClientViewServiceImpl implements ClientViewService {
                 .client(client)
                 .ofCorrespondence(clientAddressesRequest.isOfCorrespondence())
                 .ofOrder(clientAddressesRequest.isOfOrder())
+                .headquarters(clientAddressesRequest.isHeadquarters())
                 .build();
         clientService.saveAddress(address);
         client.getAddresses().add(address);
@@ -176,6 +183,10 @@ public class ClientViewServiceImpl implements ClientViewService {
                 .addresses(addresses)
                 .installation(newClient.getInstallation())
                 .agreement(newClient.getAgreement())
+                .privatePerson(newClient.getPrivatePerson())
+                .business(newClient.getBusiness())
+                .nip(newClient.getNip())
+                .regon(newClient.getRegon())
                 .build();
 
         return clientService.saveClient(client);

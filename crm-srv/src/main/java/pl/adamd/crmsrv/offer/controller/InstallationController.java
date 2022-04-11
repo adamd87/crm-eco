@@ -20,9 +20,9 @@ class InstallationController {
         return ResponseEntity.ok(installationViewService.getAllInstallations());
     }
 
-    @GetMapping("/installations/get-by-id/{id}")
-    ResponseEntity<InstallationViewResponse> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(installationViewService.getInstallationById(id));
+    @GetMapping("/installations/get-by-id/{installationId}")
+    ResponseEntity<InstallationViewResponse> getById(@PathVariable Long installationId) {
+        return ResponseEntity.ok(installationViewService.getInstallationById(installationId));
     }
 
     @PostMapping("/installations/create")

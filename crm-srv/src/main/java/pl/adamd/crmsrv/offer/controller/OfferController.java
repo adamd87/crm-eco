@@ -3,6 +3,7 @@ package pl.adamd.crmsrv.offer.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.adamd.crmsrv.offer.dto.material.request.UpdateOfferMaterialsVieRequest;
 import pl.adamd.crmsrv.offer.dto.offer.OfferViewRequest;
 import pl.adamd.crmsrv.offer.dto.offer.OfferViewResponse;
 import pl.adamd.crmsrv.offer.service.offer.OfferViewService;
@@ -34,5 +35,28 @@ public class OfferController {
     ResponseEntity<OfferViewResponse> createOffer(@RequestBody OfferViewRequest offerViewRequest) {
         return ResponseEntity.ok(offerViewService.createNewOffer(offerViewRequest));
     }
+
+    @PatchMapping("/offers/update-materials/{offerId}")
+    ResponseEntity<OfferViewResponse> updateOfferMaterials(@PathVariable Long offerId, @RequestBody UpdateOfferMaterialsVieRequest request) {
+        return ResponseEntity.ok(offerViewService.updateOfferMaterials(offerId, request));
+    }
+
+    @PatchMapping("/offers/increase-material-count/{offerId}")
+    ResponseEntity<OfferViewResponse> increaseOffersMaterialCount(@PathVariable Long offerId, @RequestBody UpdateOfferMaterialsVieRequest request){
+        return ResponseEntity.ok(offerViewService.increaseMaterialCount(offerId, request));
+    }
+
+    @PatchMapping("/offers/set-material-serial-number/{offerId}")
+    ResponseEntity<OfferViewResponse> setSerialNumber(@PathVariable Long offerId, @RequestBody UpdateOfferMaterialsVieRequest request){
+        return ResponseEntity.ok(offerViewService.setMaterialSerialNumber(offerId, request));
+    }
+
+    @PatchMapping("/offers/add-material/{offerId}")
+    ResponseEntity<OfferViewResponse> addMaterial(@PathVariable Long offerId, @RequestBody UpdateOfferMaterialsVieRequest request){
+        return ResponseEntity.ok(offerViewService.addMaterialToOffer(offerId, request));
+    }
+
+
+
 
 }

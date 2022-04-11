@@ -28,7 +28,6 @@ public class InstallationViewServiceImpl implements InstallationViewService {
     @Override
     public InstallationViewResponse createNewInstallation(InstallationViewRequest installationViewRequest) {
         Installation newInstallation = installationMapper.mapDtoToInstallation(installationViewRequest);
-        newInstallation.setGrossPrice(newInstallation.getGrossPrice());
 
         installationService.save(newInstallation);
 

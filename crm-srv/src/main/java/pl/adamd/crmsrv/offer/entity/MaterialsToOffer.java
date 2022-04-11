@@ -2,7 +2,6 @@ package pl.adamd.crmsrv.offer.entity;
 
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
-import pl.adamd.crmsrv.offer.dto.material.MaterialViewResponse;
 import pl.adamd.crmsrv.realization.enitity.Realization;
 
 import javax.persistence.*;
@@ -25,6 +24,7 @@ public class MaterialsToOffer {
     @JoinColumn(name = "materials_id")
     private Material material;
     private BigDecimal count;
+    private String serialNumber;
 
     @ManyToOne
     @JoinColumn(name = "offers_id")
