@@ -15,8 +15,6 @@ public class InstallationViewResponse {
     private String name;
     private String type;
     private BigDecimal price;
-//    private BigDecimal taxRate;
-//    private BigDecimal grossPrice;
     private int executionTimeInDays;
 
 }

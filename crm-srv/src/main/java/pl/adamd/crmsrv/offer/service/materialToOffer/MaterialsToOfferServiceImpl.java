@@ -21,4 +21,12 @@ public class MaterialsToOfferServiceImpl implements MaterialsToOfferService{
     public List<MaterialsToOffer> findAll() {
         return materialsToOfferRepository.findAll();
     }
+
+    @Override
+    public MaterialsToOffer findById(Long id) {
+        if (!materialsToOfferRepository.existsById(id)){
+            throw new RuntimeException("Nie znaleziono podanego materiału w ofercie");
+        }
+        return materialsToOfferRepository.findById(id).get();
+    }
 }

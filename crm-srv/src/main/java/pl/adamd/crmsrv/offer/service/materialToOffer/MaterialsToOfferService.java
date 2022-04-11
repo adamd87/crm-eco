@@ -9,4 +9,6 @@ public interface MaterialsToOfferService {
     MaterialsToOffer save(MaterialsToOffer materials);
 
     List<MaterialsToOffer> findAll();
+
+    MaterialsToOffer findById(Long id);
 }

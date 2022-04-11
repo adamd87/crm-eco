@@ -1,6 +1,6 @@
 package pl.adamd.crmsrv.offer.service.offer;
 
-import pl.adamd.crmsrv.offer.dto.material.UpdateOfferMaterialsVieRequest;
+import pl.adamd.crmsrv.offer.dto.material.request.UpdateOfferMaterialsVieRequest;
 import pl.adamd.crmsrv.offer.dto.offer.OfferViewRequest;
 import pl.adamd.crmsrv.offer.dto.offer.OfferViewResponse;
 
@@ -16,4 +16,10 @@ public interface OfferViewService {
     OfferViewResponse createNewOffer(OfferViewRequest offerViewRequest);
 
     OfferViewResponse updateOfferMaterials(Long id, UpdateOfferMaterialsVieRequest request);
+
+    OfferViewResponse increaseMaterialCount(Long offerId, UpdateOfferMaterialsVieRequest request);
+
+    OfferViewResponse setMaterialSerialNumber(Long offerId, UpdateOfferMaterialsVieRequest request);
+
+    OfferViewResponse addMaterialToOffer(Long offerId, UpdateOfferMaterialsVieRequest request);
 }

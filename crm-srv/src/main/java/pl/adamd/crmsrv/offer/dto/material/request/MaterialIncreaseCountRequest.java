@@ -1,4 +1,4 @@
-package pl.adamd.crmsrv.offer.dto.material;
+package pl.adamd.crmsrv.offer.dto.material.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

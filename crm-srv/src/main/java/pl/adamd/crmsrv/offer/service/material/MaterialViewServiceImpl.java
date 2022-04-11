@@ -3,7 +3,10 @@ package pl.adamd.crmsrv.offer.service.material;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.adamd.crmsrv.common.MaterialsFlag;
-import pl.adamd.crmsrv.offer.dto.material.*;
+import pl.adamd.crmsrv.offer.dto.material.request.MaterialCreateRequest;
+import pl.adamd.crmsrv.offer.dto.material.request.MaterialUpdateRequest;
+import pl.adamd.crmsrv.offer.dto.material.response.MaterialViewResponse;
+import pl.adamd.crmsrv.offer.dto.material.response.MaterialsListViewResponse;
 import pl.adamd.crmsrv.offer.entity.Material;
 import pl.adamd.crmsrv.offer.mapper.MaterialMapper;
 
@@ -39,19 +42,20 @@ public class MaterialViewServiceImpl implements MaterialViewService {
         setIfNotNull(updateRequest.getPower(), material::setPower);
         setIfNotNull(updateRequest.getCategory(), material::setCategory);
         setIfNotNull(updateRequest.getPrice(), material::setPrice);
-        setIfNotNull(updateRequest.getTaxRate(), material::setTaxRate);
         setIfNotNull(updateRequest.getUnit(), material::setUnit);
         materialService.save(material);
 
         return materialMapper.mapMaterialToDto(material);
     }
 
-    @Override
-    public MaterialViewResponse increaseMaterialCount(Long materialId, MaterialIncreaseCountRequest request) {
-        Material material = materialService.findById(materialId);
+//    @Override
+//    public MaterialViewResponse increaseMaterialCount(Long materialId, MaterialIncreaseCountRequest request) {
+//        Material material = materialService.findById(materialId);
+//
+    //todo: count z Obiektu material został tymczasowo usunięty
 
-        material.setCount(material.getCount().add(request.getIncreaseBy()));
-        materialService.save(material);
-        return materialMapper.mapMaterialToDto(material);
-    }
+//        material.setCount(material.getCount().add(request.getIncreaseBy()));
+//        materialService.save(material);
+//        return materialMapper.mapMaterialToDto(material);
+//    }
 }

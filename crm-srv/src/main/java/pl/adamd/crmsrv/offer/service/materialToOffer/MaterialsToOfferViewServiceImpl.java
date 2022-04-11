@@ -2,7 +2,7 @@ package pl.adamd.crmsrv.offer.service.materialToOffer;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.adamd.crmsrv.offer.dto.material.MaterialListOfferResponse;
+import pl.adamd.crmsrv.offer.dto.material.response.MaterialListOfferResponse;
 import pl.adamd.crmsrv.offer.entity.MaterialsToOffer;
 import pl.adamd.crmsrv.offer.mapper.MaterialsToOfferMapper;
 

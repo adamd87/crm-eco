@@ -2,9 +2,9 @@ package pl.adamd.crmsrv.offer.mapper;
 
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
-import pl.adamd.crmsrv.offer.dto.material.MaterialCreateRequest;
-import pl.adamd.crmsrv.offer.dto.material.MaterialViewResponse;
-import pl.adamd.crmsrv.offer.dto.material.MaterialsListViewResponse;
+import pl.adamd.crmsrv.offer.dto.material.request.MaterialCreateRequest;
+import pl.adamd.crmsrv.offer.dto.material.response.MaterialViewResponse;
+import pl.adamd.crmsrv.offer.dto.material.response.MaterialsListViewResponse;
 import pl.adamd.crmsrv.offer.entity.Material;
 
 import java.util.List;

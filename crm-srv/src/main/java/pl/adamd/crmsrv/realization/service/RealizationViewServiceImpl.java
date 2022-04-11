@@ -12,17 +12,10 @@ import pl.adamd.crmsrv.client.dto.response.ClientAddressesViewResponse;
 import pl.adamd.crmsrv.client.entity.Client;
 import pl.adamd.crmsrv.client.mapper.ClientMapper;
 import pl.adamd.crmsrv.client.service.ClientService;
-import pl.adamd.crmsrv.common.MaterialsFlag;
-import pl.adamd.crmsrv.device.dto.DeviceOrderViewResponse;
-import pl.adamd.crmsrv.device.dto.DeviceViewResponse;
-import pl.adamd.crmsrv.device.entity.Device;
 import pl.adamd.crmsrv.device.mapper.DeviceMapper;
 import pl.adamd.crmsrv.device.service.DeviceService;
 import pl.adamd.crmsrv.offer.dto.installation.InstallationViewResponse;
-import pl.adamd.crmsrv.offer.dto.material.MaterialListOfferResponse;
-import pl.adamd.crmsrv.offer.dto.material.MaterialViewResponse;
-import pl.adamd.crmsrv.offer.entity.Installation;
-import pl.adamd.crmsrv.offer.entity.Material;
+import pl.adamd.crmsrv.offer.dto.material.response.MaterialListOfferResponse;
 import pl.adamd.crmsrv.offer.entity.MaterialsToOffer;
 import pl.adamd.crmsrv.offer.entity.Offer;
 import pl.adamd.crmsrv.offer.mapper.InstallationMapper;
@@ -36,11 +29,9 @@ import pl.adamd.crmsrv.realization.enitity.Realization;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
-import static java.math.BigInteger.ZERO;
 
 @Service
 @AllArgsConstructor
@@ -105,6 +96,7 @@ public class RealizationViewServiceImpl implements RealizationViewService {
         response.setAgreementDetails(agreementResponse);
         response.setMaterialsList(materialListOfferResponseList);
         response.setInstallationsDetails(installationResponseList);
+        response.setDateOfCreate(realization.getDateOfCreate());
         return response;
     }
 
@@ -159,10 +151,12 @@ public class RealizationViewServiceImpl implements RealizationViewService {
     }
 
     private Realization getRealization(Offer offer, List<MaterialsToOffer> materials) {
+
         Realization realization = Realization.builder()
                 .offer(offer)
                 .materials(materials)
                 .client(offer.getClient())
+                .dateOfCreate(LocalDateTime.now())
                 .inProgress(true)
                 .done(false)
                 .build();

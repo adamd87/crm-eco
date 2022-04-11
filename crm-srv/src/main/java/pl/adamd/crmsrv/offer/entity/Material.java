@@ -7,7 +7,6 @@ import pl.adamd.crmsrv.common.UnitOfMeasure;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 
 @Entity
@@ -29,18 +28,11 @@ public class Material {
     private String power;
     private String category;
     private BigDecimal price;
-    private BigDecimal taxRate;
-    private BigDecimal grossPrice;
-    private BigDecimal count;
     private UnitOfMeasure unit;
     private MaterialsFlag materialsFlag;
 
 
     @OneToMany
     private List<MaterialsToOffer> materials;
-
-    public BigDecimal getGrossPrice(){
-        return price.multiply(taxRate).add(price).setScale(2, RoundingMode.HALF_DOWN);
-    }
 
 }

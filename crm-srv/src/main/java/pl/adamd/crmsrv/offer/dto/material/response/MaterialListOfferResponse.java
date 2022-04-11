@@ -1,4 +1,4 @@
-package pl.adamd.crmsrv.offer.dto.material;
+package pl.adamd.crmsrv.offer.dto.material.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,4 +13,5 @@ public class MaterialListOfferResponse {
 
     private MaterialViewResponse material;
     private BigDecimal count;
+    private String serialNumber;
 }

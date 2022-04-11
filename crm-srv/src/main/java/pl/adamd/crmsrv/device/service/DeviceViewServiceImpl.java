@@ -71,8 +71,6 @@ public class DeviceViewServiceImpl implements DeviceViewService {
                     .power(newDevice.getPower())
                     .category(newDevice.getCategory())
                     .price(newDevice.getPrice())
-                    .taxRate(newDevice.getTaxRate())
-                    .count(newDevice.getCount())
                     .unit(newDevice.getUnit())
                     .materialsFlag(MaterialsFlag.device)
                     .build();

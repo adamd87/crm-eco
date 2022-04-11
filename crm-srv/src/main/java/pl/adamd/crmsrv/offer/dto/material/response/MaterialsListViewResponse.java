@@ -1,4 +1,4 @@
-package pl.adamd.crmsrv.offer.dto.material;
+package pl.adamd.crmsrv.offer.dto.material.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,9 +19,6 @@ public class MaterialsListViewResponse {
     private String power;
     private String category;
     private BigDecimal price;
-    private BigDecimal taxRate;
-    private BigDecimal grossPrice;
-    private BigDecimal count;
     private UnitOfMeasure unit;
     private MaterialsFlag materialsFlag;
 }

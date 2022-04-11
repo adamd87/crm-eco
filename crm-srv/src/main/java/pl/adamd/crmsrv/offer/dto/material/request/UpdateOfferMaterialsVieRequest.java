@@ -1,4 +1,4 @@
-package pl.adamd.crmsrv.offer.dto.material;
+package pl.adamd.crmsrv.offer.dto.material.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,8 +9,11 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MaterialsViewRequest {
+public class UpdateOfferMaterialsVieRequest {
 
+    private Long materialToOfferId;
     private Long materialId;
     private BigDecimal count;
+    private String serialNumber;
+
 }

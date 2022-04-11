@@ -1,6 +1,6 @@
 package pl.adamd.crmsrv.offer.service.materialToOffer;
 
-import pl.adamd.crmsrv.offer.dto.material.MaterialListOfferResponse;
+import pl.adamd.crmsrv.offer.dto.material.response.MaterialListOfferResponse;
 
 import java.util.List;
 

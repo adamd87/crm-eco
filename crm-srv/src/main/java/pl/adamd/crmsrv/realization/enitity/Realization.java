@@ -2,16 +2,14 @@ package pl.adamd.crmsrv.realization.enitity;
 
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.format.annotation.DateTimeFormat;
 import pl.adamd.crmsrv.agreement.entity.Agreement;
 import pl.adamd.crmsrv.client.entity.Client;
-import pl.adamd.crmsrv.device.entity.Device;
-import pl.adamd.crmsrv.offer.dto.material.MaterialListOfferResponse;
-import pl.adamd.crmsrv.offer.entity.Installation;
-import pl.adamd.crmsrv.offer.entity.Material;
 import pl.adamd.crmsrv.offer.entity.MaterialsToOffer;
 import pl.adamd.crmsrv.offer.entity.Offer;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -38,6 +36,9 @@ public class Realization {
     @ManyToOne
     @JoinColumn(name = "clients_id")
     private Client client;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime dateOfCreate;
 
     private boolean inProgress;
 

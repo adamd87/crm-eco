@@ -3,7 +3,10 @@ package pl.adamd.crmsrv.offer.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.adamd.crmsrv.offer.dto.material.*;
+import pl.adamd.crmsrv.offer.dto.material.request.MaterialCreateRequest;
+import pl.adamd.crmsrv.offer.dto.material.request.MaterialUpdateRequest;
+import pl.adamd.crmsrv.offer.dto.material.response.MaterialViewResponse;
+import pl.adamd.crmsrv.offer.dto.material.response.MaterialsListViewResponse;
 import pl.adamd.crmsrv.offer.service.material.MaterialViewService;
 
 import java.util.List;
@@ -30,10 +33,10 @@ public class MaterialController {
         return ResponseEntity.ok(materialViewService.updateMaterial(materialId, request));
     }
 
-    @PatchMapping("/materials/increase/{materialId}")
-    ResponseEntity<MaterialViewResponse> increaseById(@PathVariable Long materialId,
-                                                    @RequestBody MaterialIncreaseCountRequest request){
-        return ResponseEntity.ok(materialViewService.increaseMaterialCount(materialId, request));
-    }
+//    @PatchMapping("/materials/increase/{materialId}")
+//    ResponseEntity<MaterialViewResponse> increaseById(@PathVariable Long materialId,
+//                                                    @RequestBody MaterialIncreaseCountRequest request){
+//        return ResponseEntity.ok(materialViewService.increaseMaterialCount(materialId, request));
+//    }
 
 }
