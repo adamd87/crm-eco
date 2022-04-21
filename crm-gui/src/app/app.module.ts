@@ -20,7 +20,6 @@ import { RealizationsComponent } from './realizations/realizations.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AgreementsComponent } from './agreements/agreements.component';
 import { InstallationsComponent } from './installations/installations.component';
-import {TableModule} from 'primeng/table';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS, ɵHttpInterceptingHandler } from '@angular/common/http';
 import { AuthorizationInterceptor } from './authotization.interceptor';
 
@@ -55,7 +54,10 @@ const routes: Routes = [{
     InstallationsComponent
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
+    ToolbarModule,
+    TabViewModule,
     AppRoutingModule,
     SplitterModule,
     ButtonModule,
