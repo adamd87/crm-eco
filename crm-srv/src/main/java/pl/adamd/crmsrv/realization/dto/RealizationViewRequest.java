@@ -12,6 +12,7 @@ import java.time.LocalDate;
 public class RealizationViewRequest {
 
     private Long offerId;
+    //todo: algorytm generowania numeru umowy
     private String newAgreementNumber;
     private LocalDate dateOfSigning;
 

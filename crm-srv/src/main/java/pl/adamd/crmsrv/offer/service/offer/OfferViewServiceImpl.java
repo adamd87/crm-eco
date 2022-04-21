@@ -79,7 +79,7 @@ public class OfferViewServiceImpl implements OfferViewService {
 
         BigDecimal netPrice = devicesPrice.add(installationPrice).setScale(2, RoundingMode.HALF_DOWN);
         BigDecimal grossPrice = netPrice.add(netPrice.multiply(taxRate)).setScale(2, RoundingMode.HALF_DOWN);
-
+// todo: bez czasu wykonania
         long executionTimeInDays = getExecutionTimeInDays(installationList);
 
         LocalDate estimatedCompletionDate = offerViewRequest.getNearestStartDate().plusDays(executionTimeInDays);

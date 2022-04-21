@@ -16,6 +16,9 @@ public class OfferViewRequest {
     private Long clientId;
     private List<MaterialsViewRequest> materialIdList;
     private List<Long> installationIdList;
+    //todo warunek boolean czy budynek istnijacy czy nowo budowany - do algorytmu obliczania dotacji
+
+    // ??
     private LocalDate nearestStartDate;
 
 }
