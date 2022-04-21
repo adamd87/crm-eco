@@ -1,12 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import {PasswordModule} from 'primeng/password';
 import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
 import {SplitterModule} from 'primeng/splitter';
-import { FormsModule } from '@angular/forms';
+import {FormsModule} from '@angular/forms';
+import {TableModule} from 'primeng/table';
+import {TabViewModule} from 'primeng/tabview';
+import {ToolbarModule} from 'primeng/toolbar';
+
+import { AppComponent } from './app.component';
 import { ClientsComponent } from './clients/clients.component';
 import { MaterialsComponent } from './materials/materials.component';
 import { OffersComponent } from './offers/offers.component';
@@ -16,6 +22,7 @@ import { AgreementsComponent } from './agreements/agreements.component';
 import { InstallationsComponent } from './installations/installations.component';
 import {TableModule} from 'primeng/table';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS, ɵHttpInterceptingHandler } from '@angular/common/http';
+import { AuthorizationInterceptor } from './authotization.interceptor';
 
 const routes: Routes = [{
   path: 'clients',
@@ -53,16 +60,17 @@ const routes: Routes = [{
     SplitterModule,
     ButtonModule,
     InputTextModule,
+    PasswordModule,
     TableModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
     FormsModule
   ],
-  providers: [
-    {    
-      provide: HTTP_INTERCEPTORS, useClass: ɵHttpInterceptingHandler, multi: true 
-    },
-  ],
+  providers: [{
+    useClass: AuthorizationInterceptor,
+    multi: true,
+    provide: HTTP_INTERCEPTORS
+  },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,36 +1,78 @@
-<!-- <span class="p-float-label">
-  <input id="in_title" type="text" [(ngModel)]="title" pInputText>
-  <label for="in_title">Title</label>
-</span>
-<br>
-<button type="button" pButton label="PrimeNG" (click)="upper()"></button>
-<p>{{title}}</p> -->
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1 id="welcome">Eco CRM</h1>
+        
+<div class="col-md-auto" *ngIf="loggedUser">
 
-<!-- <p-splitter [style]="{'height': '300px'}" [panelSizes]="[20,80]" [minSizes]="[10,0]" styleClass="mb-5">
-  <ng-template pTemplate>
-      <div class="col flex align-items-center justify-content-center">
-          Panel 1
-      </div>
-  </ng-template>
-  <ng-template pTemplate>
-      <p-splitter layout="vertical" [panelSizes]="[15,85]">
-          <ng-template pTemplate>
-              <div class="col flex align-items-center justify-content-center">
-                  Panel 2
-              </div>
-          </ng-template>
-          <ng-template pTemplate>
-              <p-splitter [panelSizes]="[20,80]">                 
-                  <ng-template pTemplate>
-                      <div class="col flex align-items-center justify-content-center">
-                          Panel 4
-                      </div>
-                  </ng-template>
-              </p-splitter>
-          </ng-template>
-      </p-splitter>
-  </ng-template>
-</p-splitter> -->
-<body>
-  <router-outlet></router-outlet>
-</body>
+    <p-tabView>
+        <p-tabPanel header="Klienci">
+            <p-toolbar>
+                <div class="p-toolbar-group-left">
+                    <p-button label="Nowy klient" icon="pi pi-plus" styleClass="p-button-success"></p-button>
+                    <!-- <p-button label="Upload" icon="pi pi-upload" styleClass="p-button-success"></p-button> -->
+                    <p-button label="Lista" routerLink="/clients"></p-button>                       
+       
+                    
+                    <!-- <p-splitButton label="Save" icon="pi pi-check" [model]="items" styleClass="p-button-warning"></p-splitButton> -->
+                </div>
+                
+                <div class="p-toolbar-group-right">
+                    <p-button icon="pi pi-search"></p-button>
+                    <p-button icon="pi pi-calendar" styleClass="p-button-success"></p-button>
+                    <p-button icon="pi pi-times" styleClass="p-button-danger"></p-button>
+                </div>
+            </p-toolbar>
+        </p-tabPanel>
+        <p-tabPanel header="Umowy"> 
+            <a routerLink="/agreements">Umowy</a>
+        </p-tabPanel>
+        <p-tabPanel header="Oferty">
+            <a routerLink="/offers">Oferty</a>
+        </p-tabPanel>
+        <p-tabPanel header="Realizacjie">
+            <a routerLink="/realizations">Realizacjie</a>
+        </p-tabPanel>
+        <p-tabPanel header="Materiały">
+            <a routerLink="/materials">Materiały</a>
+        </p-tabPanel>
+        <p-tabPanel header="Instalacje">
+            <a routerLink="/installations">Instalacje</a>
+        </p-tabPanel>
+    </p-tabView>
+  <ul>
+    <!-- <li><a routerLink="/clients">Klienci</a></li>
+    <li><a routerLink="/agreements">Umowy</a></li>
+    <li><a routerLink="/offers">Oferty</a></li>
+    <li><a routerLink="/realizations">Realizacjie</a></li>
+    <li><a routerLink="/materials">Materiały</a></li>
+    <li><a routerLink="/installations">Instalacje</a></li> -->
+
+    <li><a id="logout" class="button" (click)="logout()">Logout</a></li>
+  </ul>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <form (ngSubmit)="onLoginFormSubmit()" *ngIf="!loggedUser" class="box">
+        <h1>Login</h1>
+
+        <span class="p-float-label">
+            <input id="float-input" type="text" name="username" pInputText [(ngModel)]="username"/>
+            <label for="float-input">Username</label>
+        </span>
+        <br>
+        <span class="p-float-label">
+            <input id="float-input" type="text" name="password" pInputText [(ngModel)]="password"/>
+            <label for="float-input">Password</label>
+        </span>
+        <br>        
+        <button pButton type="submit" name="login" value="Login" label="Login"></button>        
+      </form>
+    </div>
+  </div>
+</div>
+        <router-outlet></router-outlet>
+      </body>
+</html>
+
