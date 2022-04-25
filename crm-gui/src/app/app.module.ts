@@ -11,7 +11,7 @@ import {FormsModule} from '@angular/forms';
 import {TableModule} from 'primeng/table';
 import {TabViewModule} from 'primeng/tabview';
 import {ToolbarModule} from 'primeng/toolbar';
-
+import {TabMenuModule} from 'primeng/tabmenu';
 import { AppComponent } from './app.component';
 import { ClientsComponent } from './clients/clients.component';
 import { MaterialsComponent } from './materials/materials.component';
@@ -52,9 +52,11 @@ const routes: Routes = [{
     OffersComponent,
     RealizationsComponent,
     InstallationsComponent
+    
   ],
   imports: [
     BrowserAnimationsModule,
+    TabMenuModule,   
     BrowserModule,
     ToolbarModule,
     TabViewModule,

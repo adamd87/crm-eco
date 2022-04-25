@@ -1,78 +1,44 @@
 <!DOCTYPE html>
 <html>
     <body>
-        <h1 id="welcome">Eco CRM</h1>
-        
-<div class="col-md-auto" *ngIf="loggedUser">
+        <h2 id="welcome">Eco CRM</h2>        
+        <div class="col-md-auto" *ngIf="loggedUser">
+            <p-tabMenu [model]="items"></p-tabMenu>          
+            <p-tabView>
+                <p-toolbar>
+                    <div class="p-toolbar-group-left">
+                        <p-button label="Dodaj klienta" icon="pi pi-plus" styleClass="p-button" style="padding-right: 10px;"></p-button>
+                        <p-button label="Dodaj oferte" icon="pi pi-plus" styleClass="p-button" style="padding-right: 10px;"></p-button>
+                        <p-button label="Dpdaj materiał" icon="pi pi-plus" styleClass="p-button"></p-button> 
+                    </div>
+                    <div class="p-toolbar-group-right">
+                        <p-button label="Logout" styleClass="p-button-warning" (click)="logout()"></p-button>
+                    </div>
+                </p-toolbar>      
+            </p-tabView> 
+            <router-outlet></router-outlet>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <form (ngSubmit)="onLoginFormSubmit()" *ngIf="!loggedUser" class="box">
+                        <h1>Login</h1>
 
-    <p-tabView>
-        <p-tabPanel header="Klienci">
-            <p-toolbar>
-                <div class="p-toolbar-group-left">
-                    <p-button label="Nowy klient" icon="pi pi-plus" styleClass="p-button-success"></p-button>
-                    <!-- <p-button label="Upload" icon="pi pi-upload" styleClass="p-button-success"></p-button> -->
-                    <p-button label="Lista" routerLink="/clients"></p-button>                       
-       
-                    
-                    <!-- <p-splitButton label="Save" icon="pi pi-check" [model]="items" styleClass="p-button-warning"></p-splitButton> -->
+                        <span class="p-float-label">
+                            <input id="float-input" type="text" name="username" pInputText [(ngModel)]="username"/>
+                            <label for="float-input">Username</label>
+                        </span>
+                        <br>
+                        <span class="p-float-label">
+                            <input id="float-input" type="text" name="password" pInputText [(ngModel)]="password"/>
+                            <label for="float-input">Password</label>
+                        </span>
+                        <br>        
+                        <button pButton type="submit" name="login" value="Login" label="Login"></button>        
+                    </form>
                 </div>
-                
-                <div class="p-toolbar-group-right">
-                    <p-button icon="pi pi-search"></p-button>
-                    <p-button icon="pi pi-calendar" styleClass="p-button-success"></p-button>
-                    <p-button icon="pi pi-times" styleClass="p-button-danger"></p-button>
-                </div>
-            </p-toolbar>
-        </p-tabPanel>
-        <p-tabPanel header="Umowy"> 
-            <a routerLink="/agreements">Umowy</a>
-        </p-tabPanel>
-        <p-tabPanel header="Oferty">
-            <a routerLink="/offers">Oferty</a>
-        </p-tabPanel>
-        <p-tabPanel header="Realizacjie">
-            <a routerLink="/realizations">Realizacjie</a>
-        </p-tabPanel>
-        <p-tabPanel header="Materiały">
-            <a routerLink="/materials">Materiały</a>
-        </p-tabPanel>
-        <p-tabPanel header="Instalacje">
-            <a routerLink="/installations">Instalacje</a>
-        </p-tabPanel>
-    </p-tabView>
-  <ul>
-    <!-- <li><a routerLink="/clients">Klienci</a></li>
-    <li><a routerLink="/agreements">Umowy</a></li>
-    <li><a routerLink="/offers">Oferty</a></li>
-    <li><a routerLink="/realizations">Realizacjie</a></li>
-    <li><a routerLink="/materials">Materiały</a></li>
-    <li><a routerLink="/installations">Instalacje</a></li> -->
-
-    <li><a id="logout" class="button" (click)="logout()">Logout</a></li>
-  </ul>
-</div>
-<div class="container">
-  <div class="row">
-    <div class="col-md-6">
-      <form (ngSubmit)="onLoginFormSubmit()" *ngIf="!loggedUser" class="box">
-        <h1>Login</h1>
-
-        <span class="p-float-label">
-            <input id="float-input" type="text" name="username" pInputText [(ngModel)]="username"/>
-            <label for="float-input">Username</label>
-        </span>
-        <br>
-        <span class="p-float-label">
-            <input id="float-input" type="text" name="password" pInputText [(ngModel)]="password"/>
-            <label for="float-input">Password</label>
-        </span>
-        <br>        
-        <button pButton type="submit" name="login" value="Login" label="Login"></button>        
-      </form>
-    </div>
-  </div>
-</div>
-        <router-outlet></router-outlet>
-      </body>
+            </div>
+        </div>       
+    </body>
 </html>
 

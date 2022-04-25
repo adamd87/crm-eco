@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {LoggedUser} from './logged-user';
 import {HttpClient} from '@angular/common/http';
 import { Router } from '@angular/router';
+import {MenuItem} from 'primeng/api';
+import { Button } from 'primeng/button';
 
 @Component({
   selector: 'app-root',
@@ -9,11 +11,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 
-export class AppComponent implements OnInit {  
- 
+export class AppComponent implements OnInit {
+
   username!: string;
   password!: string;
   loggedUser!: LoggedUser;
+
+  items!: MenuItem[];
 
 
   constructor(private httpClient: HttpClient, private router: Router) {
@@ -21,6 +25,14 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.login();
+    this.items = [
+      {label: 'Clients', routerLink: "/clients"},
+      {label: 'Agreements', routerLink: "/agreements"},
+      {label: 'Materials', routerLink: "/materials"},
+      {label: 'Offer', routerLink: "/offers"},
+      {label: 'Realizations', routerLink: "/realizations"},
+      {label: 'Installations', routerLink: "/installations"}
+    ];
   }
 
   onLoginFormSubmit(): void {
@@ -55,5 +67,5 @@ export class AppComponent implements OnInit {
       .then(() => location.reload());
   }
 
- 
+
 }
