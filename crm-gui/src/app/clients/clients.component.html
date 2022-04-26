@@ -1,83 +1,83 @@
+<p-tabView>
+    <p-toolbar>
+        <div class="p-toolbar-group-left">
+            <p-button label="Dodaj klienta" icon="pi pi-plus" styleClass="p-button"></p-button>
+        </div>                   
+    </p-toolbar>    
+</p-tabView>  
+
 <div class="card">
-    <input type="button" value="Get all items" (click)="loadClients()">
-        <p-table>
-        <ng-template pTemplate="header">
-            <tr>
-                <th>Klient</th>
-                <th>Telefon</th>
-                <th>e-mail</th>
-                <th>info</th>
-                <th style="width: 6rem">Umowa</th>
-                <th style="width: 6rem">Firma</th>
-                <th>NIP</th>
-                <th>REGON</th>
-                <th>Agent</th>
-            </tr>
-            <tr>
-                <th>
-                    <p-columnFilter type="text" field="name"></p-columnFilter>
-                </th>
-                <th>
-                    <p-columnFilter type="text" field="phone"></p-columnFilter>
-                </th>
-                <th>
-                    <p-columnFilter type="text" field="email"></p-columnFilter>
-                </th>
-                <th>
-                    <p-columnFilter type="text" field="info"></p-columnFilter>
-                </th>
-                <th>
-                    <p-columnFilter type="boolean" field="agreement"></p-columnFilter>
-                </th>
-                <th>
-                    <p-columnFilter type="boolean" field="business"></p-columnFilter>
-                </th>
-                <th>
-                    <p-columnFilter type="text" field="nip"></p-columnFilter>
-                </th>
-                <th>
-                    <p-columnFilter type="text" field="regon"></p-columnFilter>
-                </th>
-                <th>
-                    <p-columnFilter type="text" field="traderName"></p-columnFilter>
-                </th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-client ngFor="let client for clientList">
-            <tr>
-                <td>
-                    {{client.name}}
-                </td>
-                <td>
-                    {{client.phone}}
-                </td>
-                <td>
-                    {{client.email}}
-                </td>
-                <td>
-                    {{client.info}}
-                </td>
-                <td>
-                    <i class="pi" [ngClass]="{'true-icon pi-check-circle': client.agreement, 'false-icon pi-times-circle': !client.agreement}"></i>
-                </td>
-                <td>
-                    <i class="pi" [ngClass]="{'true-icon pi-check-circle': client.business, 'false-icon pi-times-circle': !client.business}"></i>
-                </td>
-                <td>
-                    {{client.nip}}
-                </td>
-                <td>
-                    {{client.regon}}
-                </td>
-                <td>
-                    {{client.traderName}}
-                </td>
-            </tr>
-        </ng-template>
-        <!-- <ng-template pTemplate="emptymessage">
-            <tr>
-                <td colspan="5">No customers found.</td>
-            </tr>
-        </ng-template> -->
-    </p-table>
+    <p-table #dt2 [value]="clientList" dataKey="id"
+        [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
+        [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} etries"
+        [globalFilterFields]="['name','email','traderName']">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Klient</th>
+            <th>Telefon</th>
+            <th>e-mail</th>
+            <th>info</th>
+            <th style="width: 6rem">Umowa</th>
+            <th style="width: 6rem">Firma</th>
+            <th>NIP</th>
+            <th>Agent</th>
+        </tr>
+        <tr>
+            <th>
+                <p-columnFilter type="text" field="surname"></p-columnFilter>
+            </th>
+            <th>
+                <p-columnFilter type="text" field="phone"></p-columnFilter>
+            </th>
+            <th>
+                <p-columnFilter type="text" field="email"></p-columnFilter>
+            </th>
+            <th>
+                <p-columnFilter type="text" field="info"></p-columnFilter>
+            </th>
+            <th>
+                <p-columnFilter type="boolean" field="agreement"></p-columnFilter>
+            </th>
+            <th>
+                <p-columnFilter type="boolean" field="business"></p-columnFilter>
+            </th>
+            <th>
+                <p-columnFilter type="text" field="nip"></p-columnFilter>
+            </th>
+            <th>
+                <p-columnFilter type="text" field="traderName"></p-columnFilter>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-client>
+        <tr>
+            <td>
+                {{client.surname}} {{client.name}}
+            </td>
+            <td>
+                {{client.phone}}
+            </td>
+            <td>
+                {{client.email}}
+            </td>
+            <td>
+                {{client.info}}
+            </td>
+            <td>
+                <i class="pi" [ngClass]="{'true-icon pi-check-circle': client.agreement, 'false-icon pi-times-circle': !client.agreement}"></i>
+            </td>
+            <td>
+                <i class="pi" [ngClass]="{'true-icon pi-check-circle': client.business, 'false-icon pi-times-circle': !client.business}"></i>
+            </td>
+            <td>
+                {{client.nip}}
+            </td>
+            <td>
+                {{client.traderName}}
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
 </div>
+
+

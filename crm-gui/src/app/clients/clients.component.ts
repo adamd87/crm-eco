@@ -11,7 +11,9 @@ export class ClientsComponent implements OnInit {
 
   private clientsUrl = 'http://localhost:8080/api/clients';
 
-  clientList: Client [] = [];
+  clientList!: Client[];
+
+  loading: boolean = true;
 
   newClient: Client = {
     name: '',
@@ -53,6 +55,7 @@ export class ClientsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadClients();
+    this.loading = false;
   }
 
   getClientById(clientId: number){
