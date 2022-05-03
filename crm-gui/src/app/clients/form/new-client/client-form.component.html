@@ -1,0 +1,186 @@
+<br><br>
+<h5>Nowy klient:</h5>
+<div class="card my-5">    
+    <div class="card-body">
+      <form (ngSubmit)="onSubmit()" #clientForm="ngForm">   
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label for="name">Imię klienta</label>
+              <input type="text" [(ngModel)]="client.name" 
+                class="form-control" 
+                id="name" 
+                name="name" 
+                placeholder="Enter name"
+                required #name="ngModel">
+            </div>
+            <div [hidden]="!name.pristine" class="alert alert-danger">Pole wymagane</div>
+            <div class="form-group">
+              <label for="surname">Nazwisko klienta</label>
+              <input type="text" [(ngModel)]="client.surname" 
+                class="form-control" 
+                id="surname"
+                name="surname" 
+                placeholder="Enter surname"
+                required #surname="ngModel">
+            </div>
+            <div [hidden]="!surname.pristine" class="alert alert-danger">Pole wymagane</div>
+            <div class="form-group">
+              <label for="phone">Numer telefonu</label>
+              <input type="text" [(ngModel)]="client.phone" 
+                class="form-control" 
+                id="phone" 
+                name="phone" 
+                placeholder="Enter phone number"
+                required #phone="ngModel">
+            </div>
+            <div [hidden]="!phone.pristine" class="alert alert-danger">Pole wymagane</div>
+            <div class="form-group">
+              <label for="email">Adres e-mail</label>
+              <input type="text" [(ngModel)]="client.email" 
+                class="form-control" 
+                id="email" 
+                name="email" 
+                placeholder="Enter email address"
+                required #email="ngModel">    
+            </div>                  
+            <div [hidden]="!email.pristine" class="alert alert-danger">Pole wymagane</div>        
+            <fieldset class="row mb-3">         
+              <div class="col-sm-10">
+                <div class="form-check">
+                  <input class="form-check-input" 
+                    type="checkbox"  
+                    [(ngModel)]="client.business" 
+                    name="gridRadios" 
+                    id="business" 
+                    value="true">
+                  <label class="form-check-label" for="business">
+                    Firma
+                  </label>
+                </div>            
+              </div>
+            </fieldset>
+            <div class="form-group">
+              <label for="nip">NIP</label>
+              <input type="text" [(ngModel)]="client.nip" 
+                class="form-control" 
+                id="nip" 
+                name="nip" 
+                placeholder="Enter nip">    
+            </div> 
+            <div class="form-group">
+              <label for="info">Dodatkowe informacje</label>
+              <input type="text" [(ngModel)]="client.info" 
+                class="form-control" 
+                id="info" 
+                name="info" 
+                placeholder="Enter text">    
+            </div>      
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label for="street">Ulica</label>
+              <input type="text" [(ngModel)]="address.street"
+                class="form-control" 
+                id="street" 
+                name="street" 
+                placeholder="Enter street"
+                required #street="ngModel">
+            </div>
+            <div [hidden]="!street.pristine" class="alert alert-danger">Pole wymagane</div>
+            <div class="form-group">
+              <label for="buildingNumber">Numer budynku</label>
+              <input type="text" [(ngModel)]="address.buildingNumber" 
+                class="form-control" 
+                id="buildingNumber"
+                name="buildingNumber" 
+                placeholder="Enter building number"
+                required #buildingNumber="ngModel">
+            </div>
+            <div [hidden]="!buildingNumber.pristine" class="alert alert-danger">Pole wymagane</div>
+            <div class="form-group">
+              <label for="apartmentNumber">Numer apartamentu</label>
+              <input type="text" [(ngModel)]="address.apartmentNumber" 
+                class="form-control" 
+                id="apartmentNumber" 
+                name="apartmentNumber" 
+                placeholder="Enter apartment number"
+                required #apartmentNumber="ngModel">
+            </div>
+            <div [hidden]="!apartmentNumber.pristine" class="alert alert-danger">Pole wymagane</div>
+            <div class="form-group">
+              <label for="postCode">Kod pocztowy</label>
+              <input type="text" [(ngModel)]="address.postCode" 
+                class="form-control" 
+                id="postCode" 
+                name="postCode" 
+                placeholder="Enter post code"
+                required #postCode="ngModel">    
+            </div>                  
+            <div [hidden]="!postCode.pristine" class="alert alert-danger">Pole wymagane</div> 
+            <div class="form-group">
+              <label for="city">Miasto</label>
+              <input type="text" [(ngModel)]="address.city" 
+                class="form-control" 
+                id="city" 
+                name="city" 
+                placeholder="Enter city"
+                required #city="ngModel">    
+            </div>                  
+            <div [hidden]="!city.pristine" class="alert alert-danger">Pole wymagane</div> 
+            <div class="form-group">
+              <label for="country">Państwo</label>
+              <input type="text" [(ngModel)]="address.country" 
+                class="form-control" 
+                id="country" 
+                name="country" 
+                placeholder="Enter country">
+                <!-- required #country="ngModel">     -->
+            </div>                  
+            <!-- <div [hidden]="!country.pristine" class="alert alert-danger">Pole wymagane</div>  -->
+            <fieldset class="row mb-3">         
+              <div class="col-sm-10">
+                <div class="form-check">
+                  <input class="form-check-input" 
+                    type="checkbox"  
+                    [(ngModel)]="address.ofCorrespondence" 
+                    name="gridRadios" 
+                    id="ofCorrespondence" 
+                    value="true">
+                  <label class="form-check-label" for="ofCorrespondence">
+                    Adres korespondencyjny
+                  </label>
+                </div> 
+                <div class="form-check">
+                  <input class="form-check-input" 
+                    type="checkbox"  
+                    [(ngModel)]="address.ofOrder" 
+                    name="gridRadios" 
+                    id="ofOrder" 
+                    value="true">
+                  <label class="form-check-label" for="ofOrder">
+                    Adres realizacji
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" 
+                    type="checkbox"  
+                    [(ngModel)]="address.headquarters" 
+                    name="gridRadios" 
+                    id="headquarters" 
+                    value="true">
+                  <label class="form-check-label" for="headquarters">
+                    Siedziba firmy
+                  </label>
+                </div>
+              </div>
+            </fieldset>          
+          </div>
+        </div>
+        <button type="submit" [disabled]="!clientForm.form.valid"
+          class="btn btn-info">Submit</button>       
+      </form>
+    </div>
+  </div>
+  
+

@@ -3,7 +3,14 @@
     <body>
         <p-toolbar>
             <div class="p-toolbar-group-left"></div>
-            <div class="p-toolbar-group-right"><p-button label="Logout" styleClass="p-button-warning" (click)="logout()"></p-button></div>
+   
+            <div class="p-toolbar-group-right"> 
+                <button 
+                pButton pRipple type="button" 
+                label="Logout" 
+                class="p-button-raised p-button-info p-button-text" 
+                (click)="logout()"></button>
+            </div>
         </p-toolbar>          
         <div class="col-md-auto" *ngIf="loggedUser">
             <p-tabMenu [model]="items"></p-tabMenu>      
@@ -16,16 +23,28 @@
                         <h1>Login</h1>
 
                         <span class="p-float-label">
-                            <input id="float-input" type="text" name="username" pInputText [(ngModel)]="username"/>
+                            <input 
+                            id="float-input" 
+                            type="text" 
+                            name="username" 
+                            pInputText [(ngModel)]="username"/>
                             <label for="float-input">Username</label>
                         </span>
                         <br>
                         <span class="p-float-label">
-                            <input id="float-input" type="text" name="password" pInputText [(ngModel)]="password"/>
+                            <input 
+                            id="float-input" 
+                            type="text" 
+                            name="password" 
+                            pInputText [(ngModel)]="password"/>
                             <label for="float-input">Password</label>
                         </span>
                         <br>        
-                        <button pButton type="submit" name="login" value="Login" label="Login"></button>        
+                        <button 
+                        pButton 
+                        pRipple type="submit" 
+                        label="login" 
+                        class="p-button-raised p-button-info p-button-text"></button>        
                     </form>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -13,35 +13,28 @@ import {TabViewModule} from 'primeng/tabview';
 import {ToolbarModule} from 'primeng/toolbar';
 import {TabMenuModule} from 'primeng/tabmenu';
 import { AppComponent } from './app.component';
-import { ClientsComponent } from './clients/clients.component';
+import { ClientsComponent } from './clients/clients-list/clients.component';
 import { MaterialsComponent } from './materials/materials.component';
 import { OffersComponent } from './offers/offers.component';
 import { RealizationsComponent } from './realizations/realizations.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AgreementsComponent } from './agreements/agreements.component';
 import { InstallationsComponent } from './installations/installations.component';
-import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS, ɵHttpInterceptingHandler } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, } from '@angular/common/http';
 import { AuthorizationInterceptor } from './authotization.interceptor';
+import { ClientService } from './clients/service/client.service';
+import { ClientFormComponent } from './clients/form/new-client/client-form.component';
+import { UpdateClientFormComponent } from './clients/form/update-client/update-client-form.component';
+import { ClientDetailsComponent } from './clients/client-details/client-details.component';
 
-const routes: Routes = [{
-  path: 'clients',
-  component: ClientsComponent
-}, {
-  path: 'materials',
-  component: MaterialsComponent
-}, {
-  path: 'offers',
-  component: OffersComponent
-}, {
-  path: 'realizations',
-  component: RealizationsComponent
-}, {
-  path: 'agreements',
-  component: AgreementsComponent
-}, {
-  path: 'installations',
-  component: InstallationsComponent
-}];
+const routes: Routes = [
+  {path: 'clients',  component: ClientsComponent}, 
+  {path: 'materials', component: MaterialsComponent}, 
+  {path: 'offers', component: OffersComponent}, 
+  {path: 'realizations', component: RealizationsComponent}, 
+  {path: 'agreements', component: AgreementsComponent}, 
+  {path: 'installations', component: InstallationsComponent}
+];
 
 @NgModule({
   declarations: [
@@ -51,8 +44,10 @@ const routes: Routes = [{
     MaterialsComponent,
     OffersComponent,
     RealizationsComponent,
-    InstallationsComponent
-    
+    InstallationsComponent,
+    ClientFormComponent,
+    UpdateClientFormComponent,
+    ClientDetailsComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -70,11 +65,10 @@ const routes: Routes = [{
     RouterModule.forRoot(routes),
     FormsModule
   ],
-  providers: [{
-    useClass: AuthorizationInterceptor,
-    multi: true,
-    provide: HTTP_INTERCEPTORS
-  },],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass:AuthorizationInterceptor, multi:true},
+    {provide: ClientService}
+  ],  
   bootstrap: [AppComponent]
 })
 export class AppModule { }

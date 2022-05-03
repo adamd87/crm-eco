@@ -26,12 +26,12 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.login();
     this.items = [
-      {label: 'Clients', routerLink: "/clients"},
-      {label: 'Agreements', routerLink: "/agreements"},
-      {label: 'Materials', routerLink: "/materials"},
-      {label: 'Offer', routerLink: "/offers"},
-      {label: 'Realizations', routerLink: "/realizations"},
-      {label: 'Installations', routerLink: "/installations"}
+      {label: 'Klienci', routerLink: "/clients"},
+      {label: 'Oferty', routerLink: "/offers"},
+      {label: 'Realizacje', routerLink: "/realizations"},
+      {label: 'Umowy', routerLink: "/agreements"},
+      {label: 'Materiały', routerLink: "/materials"},
+      {label: 'Instalacje', routerLink: "/installations"}
     ];
   }
 
