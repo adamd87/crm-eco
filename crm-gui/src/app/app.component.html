@@ -1,54 +1,39 @@
 <!DOCTYPE html>
 <html>
-    <body>
-        <p-toolbar>
-            <div class="p-toolbar-group-left"></div>
-   
-            <div class="p-toolbar-group-right"> 
-                <button 
-                pButton pRipple type="button" 
-                label="Logout" 
-                class="p-button-raised p-button-info p-button-text" 
-                (click)="logout()"></button>
-            </div>
-        </p-toolbar>          
-        <div class="col-md-auto" *ngIf="loggedUser">
-            <p-tabMenu [model]="items"></p-tabMenu>      
-            <router-outlet></router-outlet>
-        </div>
+    <body> 
+        <header class="welcome">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">               
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarColor02" style="padding: 10px;">
+                   <ul class="navbar-nav mr-auto">
+                      <li class="nav-item active">                       
+                        <li><a routerLink="/clients" style="padding: 10px; font-size:x-large;">Klienci</a></li>
+                        <li><a routerLink="/offers" style="padding: 10px; font-size: x-large;">Oferty</a></li>
+                        <li><a routerLink="/agreements" style="padding: 10px; font-size: x-large;">Umowy</a></li>
+                        <li><a routerLink="/realizations" style="padding: 10px; font-size: x-large;">Realizacje</a></li>
+                        <li><a routerLink="/materials" style="padding: 10px; font-size: x-large;">Materiały</a></li>
+                        <li><a routerLink="/installations" style="padding: 10px; font-size: x-large;">Instalacje</a></li>
+                        <li><a routerLink="/logout" (click)="logout()" style="padding: 10px; font-size: x-large;">Wyloguj</a>
+                      </li>
+                   </ul>                   
+                </div>
+              </nav>
+        </header>
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
                     <form (ngSubmit)="onLoginFormSubmit()" *ngIf="!loggedUser" class="box">
                         <h1>Login</h1>
-
-                        <span class="p-float-label">
-                            <input 
-                            id="float-input" 
-                            type="text" 
-                            name="username" 
-                            pInputText [(ngModel)]="username"/>
-                            <label for="float-input">Username</label>
-                        </span>
-                        <br>
-                        <span class="p-float-label">
-                            <input 
-                            id="float-input" 
-                            type="text" 
-                            name="password" 
-                            pInputText [(ngModel)]="password"/>
-                            <label for="float-input">Password</label>
-                        </span>
-                        <br>        
-                        <button 
-                        pButton 
-                        pRipple type="submit" 
-                        label="login" 
-                        class="p-button-raised p-button-info p-button-text"></button>        
+                        <input type="text" name="username" placeholder="username" [(ngModel)]="username">
+                        <input type="text" name="password" placeholder="password" [(ngModel)]="password">
+                        <input type="submit" name="login" value="Login">
                     </form>
                 </div>
             </div>
-        </div>       
+        </div>  
+        <router-outlet></router-outlet>     
     </body>
 </html>
 

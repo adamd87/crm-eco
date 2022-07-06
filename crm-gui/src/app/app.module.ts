@@ -1,17 +1,19 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
+
 import {PasswordModule} from 'primeng/password';
 import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
 import {SplitterModule} from 'primeng/splitter';
-import {FormsModule} from '@angular/forms';
 import {TableModule} from 'primeng/table';
 import {TabViewModule} from 'primeng/tabview';
 import {ToolbarModule} from 'primeng/toolbar';
 import {TabMenuModule} from 'primeng/tabmenu';
+
 import { AppComponent } from './app.component';
 import { ClientsComponent } from './clients/clients-list/clients.component';
 import { MaterialsComponent } from './materials/materials.component';
@@ -23,9 +25,7 @@ import { InstallationsComponent } from './installations/installations.component'
 import { HttpClientModule, HTTP_INTERCEPTORS, } from '@angular/common/http';
 import { AuthorizationInterceptor } from './authotization.interceptor';
 import { ClientService } from './clients/service/client.service';
-import { ClientFormComponent } from './clients/form/new-client/client-form.component';
-import { UpdateClientFormComponent } from './clients/form/update-client/update-client-form.component';
-import { ClientDetailsComponent } from './clients/client-details/client-details.component';
+
 
 const routes: Routes = [
   {path: 'clients',  component: ClientsComponent}, 
@@ -45,9 +45,6 @@ const routes: Routes = [
     OffersComponent,
     RealizationsComponent,
     InstallationsComponent,
-    ClientFormComponent,
-    UpdateClientFormComponent,
-    ClientDetailsComponent
   ],
   imports: [
     BrowserAnimationsModule,

@@ -33,11 +33,20 @@ public class ClientViewServiceImpl implements ClientViewService {
     @Transactional
     public ClientViewResponse createClient(CreateClientRequest newClient) {
 
-        List<Address> addresses = clientMapper.mapDtoListToAddresses(newClient.getAddressesList());
+        Address address = Address.builder()
+                .street(newClient.getStreet())
+                .buildingNumber(newClient.getBuildingNumber())
+                .apartmentNumber(newClient.getApartmentNumber())
+                .postCode(newClient.getPostCode())
+                .city(newClient.getCity())
+                .build();
 
-        Client client = createNewClient(newClient, addresses);
+        List<Address> newAddressList = new ArrayList<>();
+        newAddressList.add(address);
 
-        assigningClientToAddresses(addresses, client);
+        Client client = createNewClient(newClient, newAddressList);
+
+        assigningClientToAddresses(newAddressList, client);
 
         return clientMapper.mapClientToDto(client);
     }
@@ -174,6 +183,8 @@ public class ClientViewServiceImpl implements ClientViewService {
     }
 
     private Client createNewClient(CreateClientRequest newClient, List<Address> addresses) {
+
+
         Client client = Client.builder()
                 .name(newClient.getName())
                 .surname(newClient.getSurname())
@@ -181,12 +192,10 @@ public class ClientViewServiceImpl implements ClientViewService {
                 .email(newClient.getEmail())
                 .info(newClient.getInfo())
                 .addresses(addresses)
-                .installation(newClient.getInstallation())
                 .agreement(newClient.getAgreement())
                 .privatePerson(newClient.getPrivatePerson())
                 .business(newClient.getBusiness())
                 .nip(newClient.getNip())
-                .regon(newClient.getRegon())
                 .build();
 
         return clientService.saveClient(client);

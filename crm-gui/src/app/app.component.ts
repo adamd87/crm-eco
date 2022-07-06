@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {LoggedUser} from './logged-user';
 import {HttpClient} from '@angular/common/http';
 import { Router } from '@angular/router';
-import {MenuItem} from 'primeng/api';
-import { Button } from 'primeng/button';
 
 @Component({
   selector: 'app-root',
@@ -13,26 +11,17 @@ import { Button } from 'primeng/button';
 
 export class AppComponent implements OnInit {
 
-  username!: string;
-  password!: string;
-  loggedUser!: LoggedUser;
-
-  items!: MenuItem[];
+  username?: string;
+  password?: string;
+  loggedUser: LoggedUser | undefined;
+  title: any;
 
 
   constructor(private httpClient: HttpClient, private router: Router) {
   }
 
   ngOnInit(): void {
-    this.login();
-    this.items = [
-      {label: 'Klienci', routerLink: "/clients"},
-      {label: 'Oferty', routerLink: "/offers"},
-      {label: 'Realizacje', routerLink: "/realizations"},
-      {label: 'Umowy', routerLink: "/agreements"},
-      {label: 'Materiały', routerLink: "/materials"},
-      {label: 'Instalacje', routerLink: "/installations"}
-    ];
+    this.login();   
   }
 
   onLoginFormSubmit(): void {

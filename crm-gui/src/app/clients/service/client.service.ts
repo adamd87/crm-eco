@@ -1,43 +1,42 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Addresses } from '../dto/addresses';
-import { Client } from "../dto/client";
+import { Client } from '../dto/client';
+
 import { ClientDetailsDto } from '../dto/clientDetailsDto';
 import { UpdateAddressReq } from '../dto/updateAddressReq';
 
-@Injectable()
-
+@Injectable({providedIn: 'root'})
 export class ClientService {
 
-  private clientUrl: string;
+  private apiServerUrl = environment.apiBaseUrl;
 
-  constructor(private http: HttpClient) {
-    this.clientUrl = 'http://localhost:8080/api/clients';
-   }
+  constructor(private http: HttpClient) {}
 
    public findAll(): Observable<Client[]>{
-     return this.http.get<Client[]>(this.clientUrl + '/list');
+     return this.http.get<Client[]>(`${this.apiServerUrl}/clients/list`);
    }
 
    public getAllAddresses(): Observable<Addresses[]>{
-    return this.http.get<Addresses[]>(this.clientUrl + '/addresses/list');
+    return this.http.get<Addresses[]>(`${this.apiServerUrl}/clients/addresses/list`);
   }
 
-   public clientDetails(id: number){
-    return this.http.get<ClientDetailsDto>(this.clientUrl + '/get-by-id/' + id);
+   public clientDetails(id: number): Observable<ClientDetailsDto>{
+    return this.http.get<ClientDetailsDto>(`${this.apiServerUrl}/clients/get-by-id/${id}`);
    }
 
-   public save(client: Client){
-     return this.http.post<Client>(this.clientUrl + '/create', client);
+   public save(client: Client): Observable<Client>{
+     return this.http.post<Client>(`${this.apiServerUrl}/clients/create`, client);
    }
 
-   public updateClient(id: number, client: Client){
-     return this.http.patch<Client>(this.clientUrl + '/update/' + id, client)
+   public updateClient(id: number, client: Client): Observable<Client>{
+     return this.http.patch<Client>(`${this.apiServerUrl}/clients/update/${id}`, client)
    }
    
-   public updateAddress(address: UpdateAddressReq){
-     return this.http.patch<ClientDetailsDto>(this.clientUrl + '/addresses/update', address)
+   public updateAddress(address: UpdateAddressReq): Observable<ClientDetailsDto>{
+     return this.http.patch<ClientDetailsDto>(`${this.apiServerUrl}/clients/addresses/update`, address)
    }
 
 }

@@ -2,6 +2,8 @@ package pl.adamd.crmsrv.offer.service.material;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.adamd.crmsrv.client.entity.Client;
+import pl.adamd.crmsrv.client.repository.ClientRepository;
 import pl.adamd.crmsrv.offer.entity.Material;
 import pl.adamd.crmsrv.offer.entity.MaterialsToOffer;
 import pl.adamd.crmsrv.offer.repository.MaterialRepository;
@@ -32,6 +34,7 @@ public class MaterialServiceImpl implements MaterialService {
     public Material save(Material material) {
         return materialRepository.save(material);
     }
+
 
 
 }
